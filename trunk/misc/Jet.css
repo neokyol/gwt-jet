@@ -1,0 +1,45 @@
+/** JetTable.css */
+
+
+.JetTable {
+  border-top: thin solid #444444;
+  border-left: thin solid #444444;
+  border-right: thin solid #111111;
+  border-bottom: thin solid #111111;
+  background-color:  #505050;
+}
+
+.JetTable-OddRow {
+  background-color: #cccccc;
+}
+
+.JetTable-EvenRow {
+  background-color:  #505050;
+}
+
+
+.JetTable-ColumnLabel {
+  color: white;
+  padding: 3px;
+}
+
+.JetTable-ColumnLabelCell {
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: white;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.JetTable-Cell {
+  border-width: 0px 0px 0px 1px;
+  border-style: solid;
+  border-color: white;
+  padding: 5px;
+}
+
+.hidden {
+	display: none;
+	visibility: hidden;
+}
