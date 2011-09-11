@@ -1,0 +1,219 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ar.com.kyol</groupId>
+	<artifactId>gwt-jet</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+
+	<name>gwt-jet</name>
+	<url>http://www.kyol.com.ar</url>
+
+	<repositories>
+		<repository>
+			<id>jboss-maven-alt</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>criterio</id>
+			<url>http://maven.criterio.com.ar/artifactory/repo</url>
+		</repository>
+	</repositories>
+	
+	<pluginRepositories>
+	    <pluginRepository>	
+	      <id>central</id>
+	      <name>Maven Plugin Repository</name>
+	      <url>http://repo1.maven.org/maven2</url>
+	      <layout>default</layout>
+	      <snapshots>
+	        <enabled>false</enabled>
+	      </snapshots>
+	      <releases>
+	        <updatePolicy>never</updatePolicy>
+	      </releases>
+	    </pluginRepository>
+	    <pluginRepository>
+			<id>criterio</id>
+			<url>http://maven.criterio.com.ar/artifactory/repo</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- convenience to define GWT version in one place -->
+		<gwt.version>2.2.1.NOTZ</gwt.version>
+
+		<!-- tell the compiler we can use 1.6 -->
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.gwtent</groupId>
+			<artifactId>gwtent</artifactId>
+			<version>2.0.0-RC1-GWT2.2</version>
+			<!-- <scope>system</scope> -->
+			<!-- <systemPath>${user.home}/.m2/repository/com/gwtent/gwtent/2.0.0-RC1-GWT2.2/gwtent-2.0.0-RC1-GWT2.2.jar</systemPath> -->
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
+			<scope>system</scope>
+			<systemPath>${user.home}/.m2/repository/com/google/gwt/gwt-servlet/${gwt.version}/gwt-servlet-${gwt.version}.jar</systemPath>
+		</dependency>
+	
+		<!-- GWT dependencies -->
+		<!-- <dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${gwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>${gwt.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.gwtent</groupId>
+			<artifactId>gwtent</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency> -->
+	</dependencies>
+	
+	<build>
+		 <!--
+     	   sources need to be bundled with the jar,
+        	so they are visible to GWT's compiler
+     	 -->
+
+      <!--
+        You can either setup a resource to point to your java sources ...
+
+	    <resources>
+	      <resource>
+	        <directory>src/main/java</directory>
+	        <includes>
+	          <include>**/*.java</include>
+	          <include>**/*.gwt.xml</include>
+	        </includes>
+	      </resource>
+	    </resources>
+	  -->
+
+		<plugins>
+			<!-- ... or ask the plugin to detect them based on gwt modules files and 
+				copy the required java sources -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>2.2.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+		          <dependency>
+		            <groupId>com.google.gwt</groupId>
+		            <artifactId>gwt-user</artifactId>
+		            <version>${gwt.version}</version>
+		          </dependency>
+		          <dependency>
+		            <groupId>com.google.gwt</groupId>
+		            <artifactId>gwt-dev</artifactId>
+		            <version>${gwt.version}</version>
+		          </dependency>
+		      	</dependencies>
+			</plugin>
+			
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-compiler-plugin</artifactId>
+			  <version>2.3.2</version>
+			  <configuration>
+			    <encoding>${project.build.sourceEncoding}</encoding> 
+			  </configuration>
+			</plugin>
+			
+			
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-assembly-plugin</artifactId>
+			    <version>2.2-beta-4</version>
+			    <configuration>
+			      <finalName>${project.build.finalName}</finalName>
+			      <appendAssemblyId>false</appendAssemblyId>
+			      <descriptors>
+            		<descriptor>assembly.xml</descriptor>
+          		  </descriptors>
+			      <!-- <descriptorRefs>
+			        <descriptorRef>jar-with-dependencies</descriptorRef>
+			      </descriptorRefs> -->
+			      <!--<archive>
+			        <manifest>
+			          <mainClass>com.flaptor.crawler.Server</mainClass>
+			        </manifest>
+			        <manifestEntries>
+			          	<Class-Path>flaptor-util-trunk-fat.jar</Class-Path>
+			        </manifestEntries>
+			      </archive> -->
+			    </configuration>
+			    <executions>
+			      <execution>
+			        <phase>package</phase>
+			        <goals>
+			          <goal>single</goal>
+			        </goals>
+			      </execution>
+			    </executions>
+			</plugin>
+			<!-- <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				 
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>source-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				 <configuration>
+			      <finalName>${project.build.finalName}</finalName>
+			      </configuration>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
+		</plugins>
+  </build>
+</project>
