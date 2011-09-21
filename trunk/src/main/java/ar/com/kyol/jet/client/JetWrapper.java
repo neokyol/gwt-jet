@@ -25,6 +25,7 @@ import ar.com.kyol.jet.client.wrappers.SqlDateBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.TextBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.TimestampBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.Wrapper;
+import ar.com.kyol.jet.client.wrappers.WrapperGenerator;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ValueBoxBase;
@@ -50,7 +51,20 @@ public class JetWrapper {
 	 * @return
 	 */
 	public static Wrapper createWrapper(Object obj, String property, ReadOnlyCondition readonly) {
-		return createWrapperWidget(getProperty(obj, property), readonly);
+		return createWrapperWidget(getProperty(obj, property), readonly, null);
+	}
+	
+	/**
+	 * Creates a Wrapper for the provided object's property, automatically updating it when the associated Widget changes.
+	 * 
+	 * @param obj - the object containing the property to be wrapped
+	 * @param property - the property to be wrapped (you could specify multiple levels separating properties with a dot
+	 * @param readonly - the readonly condition
+	 * @param wrapperGenerator - the WrapperGenerator to create the widget
+	 * @return
+	 */
+	public static Wrapper createWrapper(Object obj, String property, ReadOnlyCondition readonly, WrapperGenerator wrapperGenerator) {
+		return createWrapperWidget(getProperty(obj, property), readonly, wrapperGenerator);
 	}
 	
 	public static ObjectSetter getProperty(Object obj, String prop) {
@@ -109,11 +123,13 @@ public class JetWrapper {
 		return objSetter;
 	}
 	
-	private static Wrapper createWrapperWidget(final ObjectSetter objSetter, ReadOnlyCondition readonly) {
+	private static Wrapper createWrapperWidget(final ObjectSetter objSetter, ReadOnlyCondition readonly, WrapperGenerator wrapperGenerator) {
 		objSetter.setReadOnlyCondition(readonly);
 		Wrapper wrapper = null;
 		
-		if (objSetter.isOfType(Date.class)) {
+		if(wrapperGenerator != null) {
+			wrapper = wrapperGenerator.generateWrapper(objSetter);
+		} else if (objSetter.isOfType(Date.class)) {
 			wrapper = new DateBoxWrapper((Date) objSetter.getValue(), objSetter);
 		} else if (objSetter.isOfType(java.sql.Date.class)) {
 			wrapper = new SqlDateBoxWrapper((java.sql.Date) objSetter.getValue());
