@@ -177,7 +177,7 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 			//wrapper = new LabelWrapper(objSetter.getValue().toString());
 
 		wrapper.setColumn(new Integer(column));
-		wrapper.setRow(new Integer(row));
+		wrapper.setRow(new Integer(row)); //FIXME FEDE tendría que tomar rowoffset -1 si es jetsingletable
 		
 		wrapper.initWrapper(objSetter);
 
