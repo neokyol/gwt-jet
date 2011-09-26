@@ -55,7 +55,7 @@ public class JetSplitTable<E extends Reflection> extends JetTable<E> {
 
 	@Override
 	public void setValues(List<E> values) {
-		setValues(values, false);
+		setValues(values, true);
 	}
 	
 	public void setValues(List<E> values, boolean withScroll) {
