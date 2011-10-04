@@ -254,6 +254,14 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		addColumn(columnName, title, null, widget, null, ReadOnlyCondition.NEVER);
 	}
 	
+	public void addColumn(String columnName, Widget title, String contentStyle, WrapperGenerator widget) {
+		addColumn(columnName, title, contentStyle, widget, null, ReadOnlyCondition.NEVER);
+	}
+	
+	public void addColumn(String columnName, Widget title, Integer columnWidth, WrapperGenerator widget) {
+		addColumn(columnName, title, null, widget, columnWidth, ReadOnlyCondition.NEVER);
+	}
+	
 	public void addColumn(String columnName, String title, Integer columnWidth) {
 		addColumn(columnName, title, null, null, columnWidth, ReadOnlyCondition.NEVER);
 	}
