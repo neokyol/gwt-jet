@@ -36,6 +36,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
+import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ValueBoxBase;
 import com.google.gwt.user.client.ui.Widget;
@@ -305,5 +306,14 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	
 	public JetColumn<E> getColumn(int col) {
 		return jetColumns.get(col);
+	}
+	
+	public void setEnabledRow(int row, boolean enabled) {
+		List<Widget> wRow = getRow(row);
+		for (Widget widget : wRow) {
+			if(widget instanceof HasEnabled) {
+				((HasEnabled)widget).setEnabled(enabled);
+			}
+		}
 	}
 }
