@@ -20,6 +20,7 @@ import java.util.List;
 
 import ar.com.kyol.jet.client.wrappers.Wrapper;
 
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -78,13 +79,13 @@ public class JetSplitTable<E extends Reflection> extends JetTable<E> {
 			contentPanel.setStyleName(jetTableContentPanelClass);
 		}
 		if(withScroll)
-			contentPanel.addStyleName("conScroll");
+			contentPanel.getElement().getStyle().setOverflow(Overflow.AUTO);
 		
 		this.setWidget(1,0, contentPanel);
 	}
 	
 	public void addWithScroll() {
-		contentPanel.addStyleName("conScroll");
+		contentPanel.getElement().getStyle().setOverflow(Overflow.AUTO);
 	}
 
 	@Override

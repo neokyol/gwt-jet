@@ -1,0 +1,97 @@
+/** JetTable.css */
+
+
+.JetTable,
+.JetTable-OddRow, .JetTable-EvenRow, .JetTable-DeletedRow,
+.JetTable-ColumnLabel,
+.JetTable-ColumnLabelCell,
+.JetTable-Cell 
+{
+  font-family: Trebuchet MS;
+  font-size: 11px;
+}
+.JetTable {
+  border-collapse: separate;
+  border-spacing: 1px;
+  /*   border: 1px solid #000000; */
+}
+
+.JetTable-OddRow, .JetTable-EvenRow, .JetTable-DeletedRow {
+  height: 26.5px;
+  text-align:center;
+}
+.JetTable-OddRow {
+  background: #e6e6e6;
+}
+
+.JetTable-EvenRow {
+  background: #cae3e4;
+}
+
+.JetTable-DeletedRow {
+  background: #FF9849;
+}
+
+.JetTable-contentPanel {
+	height: 300px;
+}
+.JetTable-ColumnLabel {
+  background: #0099cc;
+  height: 36.5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 11px;
+  vertical-align: top;
+}
+
+.JetTable-ColumnLabelCell {
+  padding: 0; 
+  margin-left: 9px;
+  margin-top: 6px;
+  
+}
+/*.JetTable-ColumnLabelCell div {
+  margin-left: 9px;
+  margin-top: 6px;
+  display: block;
+}*/
+.JetTable-Cell {
+  border-width: 0px 0px 0px 0px;
+}
+
+input[type=radio], input[type=checkbox] {
+	border: none;
+}
+select {
+	height: 19px;
+}
+input {
+	height: 15px;
+}
+input, select {
+	background: transparent;
+	border: 1px solid #c7cac0;
+	font-family: Trebuchet MS;
+	font-size: 11px; 
+	color: #666666;
+	/*padding: 0px !important;*/
+}
+select {
+	background: transparent;
+	border: 1px solid #c7cac0;
+	font-family: Trebuchet MS;
+	font-size: 11px; 
+	color: #666666;
+	
+}
+option {
+	background: #FFF;
+}
+.readOnly {
+ border: none !important;
+}
+.hidden {
+	display: none;
+	visibility: hidden;
+}

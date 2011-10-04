@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="JetResources">
+  <!--client bundle!-->
+  <inherits name="com.google.gwt.resources.Resources" />
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='ar.com.kyol.jet.client.JetResources'/>
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+
+</module>
