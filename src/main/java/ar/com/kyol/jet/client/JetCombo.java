@@ -110,10 +110,14 @@ public class JetCombo<E> extends Composite implements HasEnabled {
 	}
 
 	private void initGetter(String descriptor) {
-		getter = "get"+descriptor.substring(0, 1).toUpperCase() + descriptor.substring(1, descriptor.length()); //TODO soportar profundidad con .
+		if(descriptor.equals("toString")) { //very ugly solution for not being able to access E class, this way we allow List<String> to be Jetcomboed (or anything toStringable)
+			getter = "toString";
+		} else {
+			getter = "get"+descriptor.substring(0, 1).toUpperCase() + descriptor.substring(1, descriptor.length()); //TODO support depth with dot char
+		}
 	}
 	
-	public void addChangeHandler(ChangeHandler changeHandler) {
+	public void addChangeHandler(ChangeHandler changeHandler) { //TODO this must be setChangeHandler
 		this.changeHandler = changeHandler;
 	}
 	
