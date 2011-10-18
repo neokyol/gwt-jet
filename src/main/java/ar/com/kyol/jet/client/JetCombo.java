@@ -20,6 +20,8 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.HasChangeHandlers;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.ListBox;
@@ -33,7 +35,7 @@ import com.gwtent.reflection.client.TypeOracle;
  *
  * @param <E>
  */
-public class JetCombo<E> extends Composite implements HasEnabled {
+public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandlers {
 	
 	private List<E> list = new ArrayList<E>();
 	private ListBox listBox = new ListBox();
@@ -72,6 +74,13 @@ public class JetCombo<E> extends Composite implements HasEnabled {
 		this(descriptor,true);
 	}
 	
+	public int getItemCount(){
+		return listBox.getItemCount();
+	}
+	
+	public E getValue(int position){
+		return list.get(position);
+	}
 	
 	/**
 	 * A JetCombo with a "Seleccione" first item and a list of objects to choose from.
@@ -116,11 +125,14 @@ public class JetCombo<E> extends Composite implements HasEnabled {
 			getter = "get"+descriptor.substring(0, 1).toUpperCase() + descriptor.substring(1, descriptor.length()); //TODO support depth with dot char
 		}
 	}
-	
-	public void addChangeHandler(ChangeHandler changeHandler) { //TODO this must be setChangeHandler
-		this.changeHandler = changeHandler;
+	@Override
+	public HandlerRegistration addChangeHandler(ChangeHandler arg0) {
+		return listBox.addChangeHandler(arg0);
 	}
-	
+//	public void addChangeHandler(ChangeHandler changeHandler) { //TODO this must be setChangeHandler
+//		this.changeHandler = changeHandler;
+//	}
+//	
 	private void registerChangeHandler() {
 		listBox.addChangeHandler(new ChangeHandler() {
 			
