@@ -119,12 +119,10 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	protected abstract FlexTable getEncabezado();
 	public abstract void setValues(List<E> values);
 	
-	private void applyDataRowStyles() { //FIXME FEDE QUE ESTO SE SOBREESCRIBA. Empezar por 0 sirve para JetSplitTable porque la tabla que hay que 
-		//formatear es la contenido y son todas sus filas, pero cuando no es split, le está dejando al encabezado
-		//el even-row y alinea al centro; debiera empezar por 1.
+	private void applyDataRowStyles() {
 		HTMLTable.RowFormatter rf = this.getContenido().getRowFormatter();
 
-		for (int row = 0; row < this.getContenido().getRowCount(); ++row) {
+		for (int row = rowIndex; row < this.getContenido().getRowCount(); ++row) {
 			if ((row % 2) != 0) {
 				rf.addStyleName(row, "JetTable-OddRow");
 			} else {

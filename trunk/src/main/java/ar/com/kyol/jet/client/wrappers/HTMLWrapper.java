@@ -15,6 +15,8 @@
  */
 package ar.com.kyol.jet.client.wrappers;
 
+import java.sql.Timestamp;
+
 import ar.com.kyol.jet.client.ObjectSetter;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -59,9 +61,12 @@ public class HTMLWrapper extends Wrapper {
 			}else if(objSetter.getValue() instanceof java.util.Date){
 				java.util.Date utilDate = (java.util.Date)objSetter.getValue();
 				html.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(utilDate));
-			} else if(objSetter.getValue() instanceof java.sql.Date){ //FIXME Fede. agregar para Timestamp
+			} else if(objSetter.getValue() instanceof java.sql.Date){
 				java.sql.Date sqlDate = (java.sql.Date)objSetter.getValue();
 				html.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(sqlDate));
+			} else if(objSetter.getValue() instanceof Timestamp){
+				Timestamp ts = (Timestamp)objSetter.getValue();
+				html.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(ts));
 			} else {
 				html.setText(objSetter.getValue().toString());
 			}
