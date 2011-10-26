@@ -145,4 +145,9 @@ public class JetSplitTable<E extends Reflection> extends JetTable<E> {
 		}
 	}
 
+	@Override
+	protected int getFirstRowNumber() {
+		return 0;
+	}
+
 }

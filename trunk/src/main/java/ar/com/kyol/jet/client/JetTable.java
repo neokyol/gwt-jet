@@ -118,11 +118,12 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	protected abstract FlexTable getContenido();
 	protected abstract FlexTable getEncabezado();
 	public abstract void setValues(List<E> values);
+	protected abstract int getFirstRowNumber();
 	
 	private void applyDataRowStyles() {
 		HTMLTable.RowFormatter rf = this.getContenido().getRowFormatter();
 
-		for (int row = rowIndex; row < this.getContenido().getRowCount(); ++row) {
+		for (int row = getFirstRowNumber(); row < this.getContenido().getRowCount(); ++row) {
 			if ((row % 2) != 0) {
 				rf.addStyleName(row, "JetTable-OddRow");
 			} else {
