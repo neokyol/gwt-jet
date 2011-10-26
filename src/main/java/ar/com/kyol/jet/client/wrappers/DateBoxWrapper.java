@@ -67,7 +67,11 @@ public class DateBoxWrapper extends Wrapper {
 		this.date = date;
 		this.objSetter = objSetter;
 		dateBox.setValue(this.date);
-		dateBox.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd/MM/yyyy")));
+		String format = "dd/MM/yyyy";
+		if(objSetter.getFormat() != null && !objSetter.getFormat().equals("")) {
+			format = objSetter.getFormat();
+		}
+		dateBox.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat(format)));
 		
 		dateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			
