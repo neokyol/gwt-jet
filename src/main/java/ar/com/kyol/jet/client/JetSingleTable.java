@@ -60,4 +60,9 @@ public class JetSingleTable<E extends Reflection> extends JetTable<E> {
 		return this;
 	}
 
+	@Override
+	protected int getFirstRowNumber() {
+		return 1;
+	}
+
 }
