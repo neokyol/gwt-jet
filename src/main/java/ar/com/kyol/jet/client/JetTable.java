@@ -38,6 +38,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.ValueBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -204,6 +205,10 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 			wrappedWidget.setEnabled(!jetColumn.isReadOnly(wrappedWidget));
 		}
 		
+		if(wrapper.getWrappedWidget() instanceof ListBox){
+			ListBox wrappedWidget = (ListBox)wrapper.getWrappedWidget();
+			wrappedWidget.setEnabled(!jetColumn.isReadOnly(wrappedWidget));
+		}
 		return wrapper;
 	}
 	

@@ -28,6 +28,7 @@ import ar.com.kyol.jet.client.wrappers.Wrapper;
 import ar.com.kyol.jet.client.wrappers.WrapperGenerator;
 
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.ValueBoxBase;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.gwtent.reflection.client.ClassType;
@@ -135,13 +136,13 @@ public class JetWrapper {
 			wrapper = new SqlDateBoxWrapper((java.sql.Date) objSetter.getValue());
 		} else if (objSetter.isOfType(java.sql.Timestamp.class)) {
 			wrapper = new TimestampBoxWrapper((java.sql.Timestamp) objSetter.getValue());
-		} else if (objSetter.isOfType(Boolean.class)) {
+		} else if (objSetter.isOfType(Boolean.class) || objSetter.isOfType("boolean")) {
 			wrapper = new CheckBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(String.class)) {
 			wrapper = new TextBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Integer.class)) {
+		} else if (objSetter.isOfType(Integer.class) || objSetter.isOfType("int")) {
 			wrapper = new IntegerBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Float.class)) {
+		} else if (objSetter.isOfType(Float.class)  || objSetter.isOfType("float")) {
 			wrapper = new FloatBoxWrapper(objSetter);
 		} else if (objSetter.getValue() == null) {
 			wrapper = new TextBoxWrapper(objSetter);
@@ -166,6 +167,11 @@ public class JetWrapper {
 		if(wrapper.getWrappedWidget() instanceof DateBox) {
 			DateBox wrappedWidget = (DateBox)wrapper.getWrappedWidget();
 			wrappedWidget.setEnabled(!readonly.isReadOnly(wrappedWidget));
+		}
+		
+		if(wrapper.getWrappedWidget() instanceof ListBox){
+			ListBox wrappedWidget = (ListBox)wrapper.getWrappedWidget();
+			wrappedWidget.setEnabled(!readonly.isReadOnly(wrappedWidget.getValue(wrappedWidget.getSelectedIndex())));
 		}
 		
 		return wrapper;

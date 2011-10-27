@@ -68,7 +68,7 @@ public class TrueFalseListBoxWrapper extends Wrapper {
 		super(useValueAsString);
 		this.objSetter = objSetter;
 		listBox = listbox;
-		listBox.addItem(NULL);
+		listbox.addItem(NULL, "");
 		listBox.addItem(TRUE);
 		listBox.addItem(FALSE);
 		if(objSetter.getValue()!=null){
