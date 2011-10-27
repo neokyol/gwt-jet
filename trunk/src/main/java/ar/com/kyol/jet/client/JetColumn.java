@@ -21,6 +21,7 @@ import ar.com.kyol.jet.client.wrappers.WrapperGenerator;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.ValueBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -296,6 +297,19 @@ public class JetColumn<E extends Reflection> {
 	 */
 	public boolean isReadOnly(ValueBoxBase<?> obj){
 		Object value = obj.getValue();
+		boolean isReadOnly = isReadOnly(value);
+		
+		return isReadOnly;
+	}
+
+	/**
+	 * Checks if is read only.
+	 *
+	 * @param obj the obj
+	 * @return true, if is read only
+	 */
+	public boolean isReadOnly(ListBox obj){
+		Object value = obj.getValue(obj.getSelectedIndex());
 		boolean isReadOnly = isReadOnly(value);
 		
 		return isReadOnly;

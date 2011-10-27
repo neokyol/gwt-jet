@@ -100,9 +100,13 @@ public class ObjectSetter {
 	}
 	
 	public boolean isOfType(@SuppressWarnings("rawtypes") Class clase) {
-		return getType().getQualifiedSourceName().equals(clase.getName());
+		return isOfType(clase.getName());
 	}
-
+	
+	public boolean isOfType(String type) {
+		return getType().getQualifiedSourceName().equals(type);
+	}
+	
 	public void setFormat(String format) {
 		this.format = format;
 	}
