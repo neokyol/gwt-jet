@@ -132,8 +132,11 @@ public class TimestampBoxWrapper extends Wrapper {
 		if(this.originalTimestamp != null) {
 			dateBox.setValue(new Date(this.timestamp.getTime()));
 		}
-		dateBox.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd/MM/yyyy"))); //TODO use the format inside ObjectSetter if present
-		
+		String format = "dd/MM/yyyy";
+		if(objSetter.getFormat() != null && !objSetter.getFormat().equals("")) {
+			format = objSetter.getFormat();
+		}
+		dateBox.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getFormat(format)));
 		dateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			
 			@Override
