@@ -17,6 +17,7 @@ package ar.com.kyol.jet.client;
 
 import java.util.List;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -60,24 +61,33 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 	}
 	
 	private void addNavigationLinks() {
-		//TODO internationalization!
+		//FIXME internationalization!
 		//gmail like pagination:
 		int to = from+qtyRetrieved-1;
 		if(qtyRetrieved == 0) from = 0; //for empty lists
 		if(from > 0) {
-			if(from > (qty + 2)) {
-				navigationPanel.add(new Hyperlink("<< Newest", this.getPlainToken()+"/p1"));
+			if(from+1 > (qty + 2)) {
+				Hyperlink first = new Hyperlink("<< Primero", this.getPlainToken()+"/p1");
+				first.getElement().getStyle().setMarginRight(5, Unit.PX);
+				navigationPanel.add(first);
 			}
-			navigationPanel.add(new Hyperlink("< Newer", this.getPlainToken()+"/p"+(page-1)));
+			Hyperlink previous = new Hyperlink("< Anterior", this.getPlainToken()+"/p"+(page-1));
+			previous.getElement().getStyle().setMarginRight(5, Unit.PX);
+			navigationPanel.add(previous);
 		}
-		Label label = new Label((from+1)+" - "+(to+1)+" of "+total);
+		//FIXME de internat
+		Label label = new Label((from+1)+" - "+(to+1)+" de "+total);
 		//label.setWidth("130px");
 		label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		navigationPanel.add(label);
 		if(from+qtyRetrieved < total && total != 0) {
-			navigationPanel.add(new Hyperlink("Older >", this.getPlainToken()+"/p"+(page+1)));
+			Hyperlink next = new Hyperlink("Siguiente >", this.getPlainToken()+"/p"+(page+1));
+			next.getElement().getStyle().setMarginLeft(5, Unit.PX);
+			navigationPanel.add(next);
 			if(from+qtyRetrieved < (total - qty)) {
-				navigationPanel.add(new Hyperlink("Oldest >>", this.getPlainToken()+"/p"+(int)Math.ceil(Float.valueOf(total) / qty)));
+				Hyperlink last = new Hyperlink("Último >>", this.getPlainToken()+"/p"+(int)Math.ceil(Float.valueOf(total) / qty));
+				last.getElement().getStyle().setMarginLeft(5, Unit.PX);
+				navigationPanel.add(last);
 			}
 		}
 		//
