@@ -24,7 +24,7 @@ import com.gwtent.reflection.client.Reflection;
 /**
  * A single implementation of a JetTable
  * 
- * @author klarsk
+ * @author fpugnali
  *
  * @param <E>
  */
@@ -44,7 +44,7 @@ public class JetSingleTable<E extends Reflection> extends JetTable<E> {
 	@Override
 	public void setValues(List<E> values) {
 		this.removeAllRows();
-		rowIndex = 1;
+		rowIndex = getFirstRowNumber();
 		this.values = new ArrayList<E>(); 
 		generarEncabezado();
 		addValues(values);
