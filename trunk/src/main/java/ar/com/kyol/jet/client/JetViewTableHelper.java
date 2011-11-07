@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.HTML;
 public class JetViewTableHelper {
 	
 	public Wrapper createWrapperWidget(ObjectSetter objSetter,
-			@SuppressWarnings("rawtypes") JetColumn jetColumn, int column, int row) {
+			@SuppressWarnings("rawtypes") JetColumn jetColumn, int column, int row, int rowoffset) {
 		if(objSetter!=null){
 			objSetter.setReadOnlyCondition(ReadOnlyCondition.ALWAYS);
 		}else{
@@ -46,6 +46,7 @@ public class JetViewTableHelper {
 		} else if (objSetter.isOfType(java.sql.Date.class)) {
 			wrapper = new HTMLWrapper(objSetter, html);
 		} else if (objSetter.isOfType(Boolean.class)) {
+			//FIXME internationalization!
 			String value = "N";
 			if(objSetter.getValue() != null && (Boolean)objSetter.getValue())
 				value = "S";
@@ -58,15 +59,15 @@ public class JetViewTableHelper {
 		} else if (objSetter.isOfType(Float.class)) {
 			wrapper = new HTMLWrapper(objSetter, html);
 		} else if (objSetter.getValue() == null) {
-			//FIXME pasar a labelWrapper	wrapper = new LabelWrapper("");
+			//FIXME change to labelWrapper	wrapper = new LabelWrapper("");
 			wrapper = new HTMLWrapper(objSetter, html); 
 		} else
-			//FIXME cambiar a labelWrapper
+			//FIXME change to labelWrapper
 			wrapper = new HTMLWrapper(objSetter, html);
 			//wrapper = new LabelWrapper(objSetter.getValue().toString());
 		
 		wrapper.setColumn(new Integer(column));
-		wrapper.setRow(new Integer(row));
+		wrapper.setRow(new Integer(row-rowoffset));
 		
 		wrapper.initWrapper(objSetter);
 

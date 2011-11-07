@@ -170,15 +170,15 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		} else if (objSetter.isOfType(Float.class)) {
 			wrapper = new FloatBoxWrapper(objSetter);
 		} else if (objSetter.getValue() == null) {
-			//FIXME pasar a labelWrapper	wrapper = new LabelWrapper("");
+			//FIXME change to labelWrapper	wrapper = new LabelWrapper("");
 			wrapper = new TextBoxWrapper(objSetter);
 		} else
-			//FIXME cambiar a labelWrapper, ojo con los primitivos
+			//FIXME change to labelWrapper, check out primitives
 			wrapper = new TextBoxWrapper(objSetter);
 			//wrapper = new LabelWrapper(objSetter.getValue().toString());
 
 		wrapper.setColumn(new Integer(column));
-		wrapper.setRow(new Integer(row)); //FIXME FEDE tendría que tomar rowoffset -1 si es jetsingletable
+		wrapper.setRow(new Integer(row-getFirstRowNumber()));
 		
 		wrapper.initWrapper(objSetter);
 

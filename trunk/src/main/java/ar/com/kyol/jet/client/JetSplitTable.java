@@ -30,7 +30,7 @@ import com.gwtent.reflection.client.Reflection;
  * A JetTable implementation that has a fixed header. It does not use the extended FlexTable but rather
  * use two FlexTables, one for the header and one for the content.
  *  
- * @author klarsk
+ * @author fpugnali
  *
  * @param <E>
  */
@@ -66,7 +66,7 @@ public class JetSplitTable<E extends Reflection> extends JetTable<E> {
 		encabezado.removeAllRows();
 		contenido.removeAllRows();
 		this.removeAllRows();
-		rowIndex = 0;
+		rowIndex = getFirstRowNumber();
 		this.values = new ArrayList<E>(); 
 		generarEncabezado();
 		addValues(values);
