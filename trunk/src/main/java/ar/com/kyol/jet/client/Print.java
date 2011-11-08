@@ -54,6 +54,7 @@ import com.google.gwt.user.client.Timer;
 /**
  * The Class Print.
  */
+@SuppressWarnings("deprecation")
 public class Print {
 
     /** If true, use a Timer instead of DeferredCommand to print the internal fram. */
@@ -144,7 +145,7 @@ public class Print {
      *
      * @param html the html
      */
-    public static void it(String html) {
+	public static void it(String html) {
 	try {
 	    buildFrame(html);
 
@@ -156,7 +157,7 @@ public class Print {
 		    };
 		timer.schedule(TIMER_DELAY * 1000);
 	    } else {
-		DeferredCommand.addCommand(new Command() {
+		DeferredCommand.addCommand(new Command() { //TODO update this deprecated class
 			public void execute() {
 			    printFrame();
 			}
