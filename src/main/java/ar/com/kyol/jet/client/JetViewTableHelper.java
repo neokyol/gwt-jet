@@ -39,6 +39,7 @@ public class JetViewTableHelper {
 			html.addClickHandler(jetColumn.getClickHandler());
 		}
 		
+		//TODO change everything labelWrapper	wrapper = new LabelWrapper("");
 		if(wrapper != null) {
 			//continue
 		} else if (objSetter.isOfType(Date.class)) {
@@ -46,10 +47,9 @@ public class JetViewTableHelper {
 		} else if (objSetter.isOfType(java.sql.Date.class)) {
 			wrapper = new HTMLWrapper(objSetter, html);
 		} else if (objSetter.isOfType(Boolean.class)) {
-			//FIXME internationalization!
-			String value = "N";
+			String value = Jet.constants.n();
 			if(objSetter.getValue() != null && (Boolean)objSetter.getValue())
-				value = "S";
+				value = Jet.constants.y();
 			objSetter.setValue(value);
 			wrapper = new HTMLWrapper(objSetter, html);
 		} else if (objSetter.isOfType(String.class)) {
@@ -59,12 +59,9 @@ public class JetViewTableHelper {
 		} else if (objSetter.isOfType(Float.class)) {
 			wrapper = new HTMLWrapper(objSetter, html);
 		} else if (objSetter.getValue() == null) {
-			//FIXME change to labelWrapper	wrapper = new LabelWrapper("");
 			wrapper = new HTMLWrapper(objSetter, html); 
 		} else
-			//FIXME change to labelWrapper
 			wrapper = new HTMLWrapper(objSetter, html);
-			//wrapper = new LabelWrapper(objSetter.getValue().toString());
 		
 		wrapper.setColumn(new Integer(column));
 		wrapper.setRow(new Integer(row-rowoffset));

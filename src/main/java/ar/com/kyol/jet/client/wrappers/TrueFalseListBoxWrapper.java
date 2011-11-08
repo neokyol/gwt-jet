@@ -15,6 +15,7 @@
  */
 package ar.com.kyol.jet.client.wrappers;
 
+import ar.com.kyol.jet.client.Jet;
 import ar.com.kyol.jet.client.ObjectSetter;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -24,9 +25,9 @@ import com.google.gwt.user.client.ui.ListBox;
 public class TrueFalseListBoxWrapper extends Wrapper {
 	
 	private ListBox listBox;
-	public final static String NULL = "---";
-	public final static String TRUE = "sí"; //TODO internationalize this!
-	public final static String FALSE = "no";
+	public final static String NULL = Jet.constants.nullBoolean();
+	public final static String TRUE = Jet.constants.trueBoolean();
+	public final static String FALSE = Jet.constants.falseBoolean();
 	
 	/**
 	 * Instantiates a new true false list box wrapper.

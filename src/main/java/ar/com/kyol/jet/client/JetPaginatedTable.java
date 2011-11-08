@@ -61,31 +61,29 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 	}
 	
 	private void addNavigationLinks() {
-		//FIXME internationalization!
 		//gmail like pagination:
 		int to = from+qtyRetrieved-1;
 		if(qtyRetrieved == 0) from = 0; //for empty lists
 		if(from > 0) {
 			if(from+1 > (qty + 2)) {
-				Hyperlink first = new Hyperlink("<< Primero", this.getPlainToken()+"/p1");
+				Hyperlink first = new Hyperlink("<< "+Jet.constants.oldest(), this.getPlainToken()+"/p1");
 				first.getElement().getStyle().setMarginRight(5, Unit.PX);
 				navigationPanel.add(first);
 			}
-			Hyperlink previous = new Hyperlink("< Anterior", this.getPlainToken()+"/p"+(page-1));
+			Hyperlink previous = new Hyperlink("< "+Jet.constants.older(), this.getPlainToken()+"/p"+(page-1));
 			previous.getElement().getStyle().setMarginRight(5, Unit.PX);
 			navigationPanel.add(previous);
 		}
-		//FIXME de internat
-		Label label = new Label((from+1)+" - "+(to+1)+" de "+total);
+		Label label = new Label((from+1)+" - "+(to+1)+" "+Jet.constants.of()+" "+total);
 		//label.setWidth("130px");
 		label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		navigationPanel.add(label);
 		if(from+qtyRetrieved < total && total != 0) {
-			Hyperlink next = new Hyperlink("Siguiente >", this.getPlainToken()+"/p"+(page+1));
+			Hyperlink next = new Hyperlink(Jet.constants.newer()+" >", this.getPlainToken()+"/p"+(page+1));
 			next.getElement().getStyle().setMarginLeft(5, Unit.PX);
 			navigationPanel.add(next);
 			if(from+qtyRetrieved < (total - qty)) {
-				Hyperlink last = new Hyperlink("Último >>", this.getPlainToken()+"/p"+(int)Math.ceil(Float.valueOf(total) / qty));
+				Hyperlink last = new Hyperlink(Jet.constants.newest()+" >>", this.getPlainToken()+"/p"+(int)Math.ceil(Float.valueOf(total) / qty));
 				last.getElement().getStyle().setMarginLeft(5, Unit.PX);
 				navigationPanel.add(last);
 			}
