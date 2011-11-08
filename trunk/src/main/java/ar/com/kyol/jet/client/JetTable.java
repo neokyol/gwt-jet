@@ -77,7 +77,7 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		return rowContent;
 	}
 	
-	//TODO y si quieren hacer add sin haber hecho set?
+	//TODO what if they want to add without a previous set?
 	public void addValues(List<E> values) {
 		this.values.addAll(values);
 		addRows(values);
@@ -90,7 +90,7 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	
 	protected void addRows(List<? extends Object> objs) {
 
-		//TODO optimizar esto ya que todas las filas son iguales y reflection es costoso
+		//TODO optimize this, every row is equal and reflection is costly
 		for (Object obj : objs) {
 			int cell = 0;
 			for (JetColumn<E> jetColumn : jetColumns) {
@@ -147,7 +147,7 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		
 		if(wrapper != null) {
 			//continue
-		} else if (objSetter.getValue() instanceof Widget) { //TODO tiene sentido esto??? parece que no
+		} else if (objSetter.getValue() instanceof Widget) { //TODO this seems to have no sense at all, remove it
 			wrapper = new GenericWrapper() { 
 				
 				@Override
@@ -170,10 +170,10 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		} else if (objSetter.isOfType(Float.class)) {
 			wrapper = new FloatBoxWrapper(objSetter);
 		} else if (objSetter.getValue() == null) {
-			//FIXME change to labelWrapper	wrapper = new LabelWrapper("");
+			//TODO change to labelWrapper	wrapper = new LabelWrapper("");
 			wrapper = new TextBoxWrapper(objSetter);
 		} else
-			//FIXME change to labelWrapper, check out primitives
+			//TODO change to labelWrapper, check out primitives
 			wrapper = new TextBoxWrapper(objSetter);
 			//wrapper = new LabelWrapper(objSetter.getValue().toString());
 

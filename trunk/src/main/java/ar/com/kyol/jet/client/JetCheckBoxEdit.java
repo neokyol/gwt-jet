@@ -22,8 +22,6 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.resources.client.impl.ImageResourcePrototype;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasEnabled;
@@ -43,15 +41,15 @@ public abstract class JetCheckBoxEdit extends Composite implements HasEnabled, H
 	private HorizontalPanel editImagePanel = new HorizontalPanel();
 	private CheckBox checkBox = new CheckBox();
 	private Image editImage = new Image();
-	private ImageResource imgSrc;
+	//private ImageResource imgSrc;
 	private OkCancelPopup popup;
 	private boolean calledByEdit = false;
 	
 	public JetCheckBoxEdit() {
 		//edit button
-		imgSrc = new ImageResourcePrototype("editar", "img/editar.gif",  //TODO get images from jet.jar
-				0, 0, 16, 16, false, false);
-		editImage.setResource(imgSrc);
+//		imgSrc = new ImageResourcePrototype("editar", "img/editar.gif",
+//				0, 0, 16, 16, false, false);
+		editImage.setResource(Resources.INSTANCE.editar());
 		editImage.addClickHandler(new ClickHandler() {
 			
 			@Override
