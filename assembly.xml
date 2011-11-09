@@ -18,4 +18,14 @@
       </excludes>
     </dependencySet>
   </dependencySets>
+   <!-- TODO: copy every properties file in a standard way -->
+  <fileSets>
+    <fileSet>
+      <outputDirectory>/ar/com/kyol/jet/client</outputDirectory>
+      <includes>
+      	<include>*.properties</include>
+      </includes>
+      <directory>src/main/java/ar/com/kyol/jet/client</directory>
+    </fileSet>
+  </fileSets>
 </assembly>
