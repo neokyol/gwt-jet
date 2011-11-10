@@ -133,7 +133,7 @@ public class JetWrapper {
 		} else if (objSetter.isOfType(Date.class)) {
 			wrapper = new DateBoxWrapper((Date) objSetter.getValue(), objSetter);
 		} else if (objSetter.isOfType(java.sql.Date.class)) {
-			wrapper = new SqlDateBoxWrapper((java.sql.Date) objSetter.getValue());
+			wrapper = new SqlDateBoxWrapper((java.sql.Date) objSetter.getValue(), objSetter);
 		} else if (objSetter.isOfType(java.sql.Timestamp.class)) {
 			wrapper = new TimestampBoxWrapper((java.sql.Timestamp) objSetter.getValue());
 		} else if (objSetter.isOfType(Boolean.class) || objSetter.isOfType("boolean")) {

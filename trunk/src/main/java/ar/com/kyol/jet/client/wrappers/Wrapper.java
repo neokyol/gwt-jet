@@ -83,7 +83,7 @@ public abstract class Wrapper extends Composite {
 		}
 	}
 	
-	public void initWrapper(ObjectSetter objSetter) {
+	public void initWrapper(ObjectSetter objSetter) { //TODO can't remember why this method, check and refactor it
 		this.objSetter = objSetter;
 	}
 	

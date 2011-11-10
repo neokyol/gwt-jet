@@ -17,6 +17,8 @@ package ar.com.kyol.jet.client.wrappers;
 
 import java.util.Date;
 
+import ar.com.kyol.jet.client.ObjectSetter;
+
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -32,8 +34,8 @@ public class SqlDateBoxWrapper extends Wrapper {
 	 *
 	 * @param date the date
 	 */
-	public SqlDateBoxWrapper(java.sql.Date date) {
-		this(date, new DateBox());
+	public SqlDateBoxWrapper(java.sql.Date date, ObjectSetter objSetter) {
+		this(date, new DateBox(), objSetter);
 	}
 	
 	/**
@@ -42,8 +44,8 @@ public class SqlDateBoxWrapper extends Wrapper {
 	 * @param date the date
 	 * @param dateBox the date box
 	 */
-	public SqlDateBoxWrapper(java.sql.Date date, DateBox dateBox) {
-		this(date, dateBox, false);
+	public SqlDateBoxWrapper(java.sql.Date date, DateBox dateBox, ObjectSetter objSetter) {
+		this(date, dateBox, false, objSetter);
 	}
 	
 	/**
@@ -53,9 +55,10 @@ public class SqlDateBoxWrapper extends Wrapper {
 	 * @param dateBox the date box
 	 * @param useValueAsString the use value as string
 	 */
-	public SqlDateBoxWrapper(java.sql.Date date, DateBox dateBox, boolean useValueAsString) {
+	public SqlDateBoxWrapper(java.sql.Date date, DateBox dateBox, boolean useValueAsString, ObjectSetter objSetter) {
 		super(useValueAsString);
 		this.dateBox = dateBox;
+		this.objSetter = objSetter;
 		if(date!=null){
 			this.date = new java.sql.Date(date.getTime());
 		}
