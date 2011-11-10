@@ -24,15 +24,19 @@ import ar.com.kyol.jet.client.wrappers.Wrapper;
 import com.google.gwt.user.client.ui.HTML;
 
 public class JetViewTableHelper {
-	
+
+	@SuppressWarnings("rawtypes")
 	public Wrapper createWrapperWidget(ObjectSetter objSetter,
-			@SuppressWarnings("rawtypes") JetColumn jetColumn, int column, int row, int rowoffset) {
+			 JetColumn jetColumn, int column, int row, int rowoffset) {
 		if(objSetter!=null){
 			objSetter.setReadOnlyCondition(ReadOnlyCondition.ALWAYS);
-		}else{
+		}
+		
+		Wrapper wrapper = jetColumn.getWrapper(objSetter);
+		
+		if(objSetter == null && wrapper == null) { //for jetColumns trying to show inner attributes from null objects
 			return new NullWrapper(true);
 		}
-		Wrapper wrapper = jetColumn.getWrapper(objSetter);
 		
 		HTML html = new HTML();
 		if(jetColumn.getClickHandler() != null) {
