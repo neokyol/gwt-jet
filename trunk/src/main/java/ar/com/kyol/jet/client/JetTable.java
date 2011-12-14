@@ -95,8 +95,8 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 			int cell = 0;
 			for (JetColumn<E> jetColumn : jetColumns) {
 				Wrapper wrapper = createWrapperWidget(getProperty(obj, jetColumn.getColumnName()), jetColumn, cell, rowIndex);
-				this.getContenido().setWidget(rowIndex, cell, wrapper);
-				this.getContenido().getCellFormatter().addStyleName(rowIndex, cell,
+				this.getContent().setWidget(rowIndex, cell, wrapper);
+				this.getContent().getCellFormatter().addStyleName(rowIndex, cell,
 						"JetTable-Cell");
 				cell++;
 			}
@@ -107,8 +107,8 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	public void addNewRow(List<Widget> widgets) {
 		int cell = 0;
 		for (Widget widget : widgets) {
-			this.getContenido().setWidget(rowIndex, cell, widget);
-			this.getContenido().getCellFormatter().addStyleName(rowIndex, cell,
+			this.getContent().setWidget(rowIndex, cell, widget);
+			this.getContent().getCellFormatter().addStyleName(rowIndex, cell,
 				"JetTable-Cell");
 			cell++;
 		}
@@ -116,15 +116,15 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		rowIndex++;
 	}
 	
-	protected abstract FlexTable getContenido();
-	protected abstract FlexTable getEncabezado();
+	protected abstract FlexTable getContent();
+	protected abstract FlexTable getHeader();
 	public abstract void setValues(List<E> values);
 	protected abstract int getFirstRowNumber();
 	
 	private void applyDataRowStyles() {
-		HTMLTable.RowFormatter rf = this.getContenido().getRowFormatter();
+		HTMLTable.RowFormatter rf = this.getContent().getRowFormatter();
 
-		for (int row = getFirstRowNumber(); row < this.getContenido().getRowCount(); ++row) {
+		for (int row = getFirstRowNumber(); row < this.getContent().getRowCount(); ++row) {
 			if ((row % 2) != 0) {
 				rf.addStyleName(row, "JetTable-OddRow");
 			} else {
@@ -224,14 +224,14 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	
 	protected void addColumn(Object columnHeading) {
 		Widget widget = createCellWidget(columnHeading);
-		int cell = this.getEncabezado().getCellCount(HeaderRowIndex);
+		int cell = this.getHeader().getCellCount(HeaderRowIndex);
 
 		widget.setWidth("100%");
 		widget.addStyleName("JetTable-ColumnLabel");
 
-		this.getEncabezado().setWidget(HeaderRowIndex, cell, widget);
+		this.getHeader().setWidget(HeaderRowIndex, cell, widget);
 
-		this.getEncabezado().getCellFormatter().addStyleName(HeaderRowIndex, cell,
+		this.getHeader().getCellFormatter().addStyleName(HeaderRowIndex, cell,
 				"JetTable-ColumnLabelCell");
 	}
 	
@@ -308,10 +308,10 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		jetColumns.add(jetCol);
 	}
 	
-	public Widget getWidgetContenido(int row, int column) {
-		Widget widget = getContenido().getWidget(row, column);
-		if(widget instanceof GenericWrapper) {
-			return ((GenericWrapper)widget).getWrappedWidget();
+	public Widget getCellContent(int row, int column) {
+		Widget widget = getContent().getWidget(row, column);
+		if(widget instanceof Wrapper) {
+			return ((Wrapper)widget).getWrappedWidget();
 		}
 		return widget; 
 	}
