@@ -105,11 +105,11 @@ public class JetSplitTable<E extends Reflection> extends JetTable<E> {
 		return rowContent;
 	}
 
-	public FlexTable getEncabezado() {
+	public FlexTable getHeader() {
 		return encabezado;
 	}
 
-	public FlexTable getContenido() {
+	public FlexTable getContent() {
 		return contenido;
 	}
 	

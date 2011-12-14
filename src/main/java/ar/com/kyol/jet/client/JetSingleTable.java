@@ -51,12 +51,12 @@ public class JetSingleTable<E extends Reflection> extends JetTable<E> {
 	}
 	
 	@Override
-	protected FlexTable getContenido() {
+	protected FlexTable getContent() {
 		return this;
 	}
 	
 	@Override
-	protected FlexTable getEncabezado() {
+	protected FlexTable getHeader() {
 		return this;
 	}
 
