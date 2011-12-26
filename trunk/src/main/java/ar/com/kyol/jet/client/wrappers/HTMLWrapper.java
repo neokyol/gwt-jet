@@ -51,28 +51,32 @@ public class HTMLWrapper extends Wrapper {
 		} else {
 			NumberFormat.setForcedLatinDigits(true);
 			if (objSetter.getValue() instanceof Float){
-				String format = "0.00";
-				if(objSetter.getFormat() != null) {
-					format = objSetter.getFormat(); //TODO unify into wrapper method with default format optional prop
-				}
-				NumberFormat nf = NumberFormat.getFormat(format);
+				NumberFormat nf = NumberFormat.getFormat(getFormat("0.00"));
 				Float valor = (Float)objSetter.getValue();
 				html.setText(nf.format(valor));
 			}else if(objSetter.getValue() instanceof java.util.Date){
 				java.util.Date utilDate = (java.util.Date)objSetter.getValue();
-				html.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(utilDate));
+				html.setText(DateTimeFormat.getFormat(getFormat("dd/MM/yyyy")).format(utilDate));
 			} else if(objSetter.getValue() instanceof java.sql.Date){
 				java.sql.Date sqlDate = (java.sql.Date)objSetter.getValue();
-				html.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(sqlDate));
+				html.setText(DateTimeFormat.getFormat(getFormat("dd/MM/yyyy")).format(sqlDate));
 			} else if(objSetter.getValue() instanceof Timestamp){
 				Timestamp ts = (Timestamp)objSetter.getValue();
-				html.setText(DateTimeFormat.getFormat("dd/MM/yyyy").format(ts));
+				html.setText(DateTimeFormat.getFormat(getFormat("dd/MM/yyyy")).format(ts));
 			} else {
 				html.setText(objSetter.getValue().toString());
 			}
 		}
 		
 		initWidget(html);
+	}
+	
+	private String getFormat(String defaultFormat) { //TODO try to unify a default format somewhere
+		String format = defaultFormat;
+		if(objSetter.getFormat() != null) {
+			format = objSetter.getFormat(); 
+		}
+		return format;
 	}
 	
 	public HTML getHTML() {
