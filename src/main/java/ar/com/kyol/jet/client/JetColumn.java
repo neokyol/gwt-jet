@@ -290,10 +290,10 @@ public class JetColumn<E extends Reflection> {
 	}
 	
 	/**
-	 * Checks if is read only.
+	 * Checks if it's read only.
 	 *
 	 * @param obj the obj
-	 * @return true, if is read only
+	 * @return true, if it's read only
 	 */
 	public boolean isReadOnly(ValueBoxBase<?> obj){
 		Object value = obj.getValue();
@@ -303,10 +303,10 @@ public class JetColumn<E extends Reflection> {
 	}
 
 	/**
-	 * Checks if is read only.
+	 * Checks if it's read only.
 	 *
 	 * @param obj the obj
-	 * @return true, if is read only
+	 * @return true, if it's read only
 	 */
 	public boolean isReadOnly(ListBox obj){
 		Object value = obj.getValue(obj.getSelectedIndex());
@@ -316,10 +316,10 @@ public class JetColumn<E extends Reflection> {
 	}
 
 	/**
-	 * Checks if is read only.
+	 * Checks if it's read only.
 	 *
 	 * @param obj the obj
-	 * @return true, if is read only
+	 * @return true, if it's read only
 	 */
 	public boolean isReadOnly(CheckBox obj){
 		Object value = obj.getValue();
@@ -329,10 +329,10 @@ public class JetColumn<E extends Reflection> {
 	}
 
 	/**
-	 * Checks if is read only.
+	 * Checks if it's read only.
 	 *
 	 * @param obj the obj
-	 * @return true, if is read only
+	 * @return true, if it's read only
 	 */
 	public boolean isReadOnly(DateBox obj){
 		Object value = obj.getValue();
@@ -342,10 +342,10 @@ public class JetColumn<E extends Reflection> {
 	}
 
 	/**
-	 * Checks if is read only.
+	 * Checks if it's readonly.
 	 *
 	 * @param value the value
-	 * @return true, if is read only
+	 * @return true, if it's read only
 	 */
 	private boolean isReadOnly(Object value) {
 		return readonly.isReadOnly(value);

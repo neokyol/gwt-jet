@@ -87,7 +87,7 @@ public class TrueFalseListBoxWrapper extends Wrapper {
 			@Override
 			public void onChange(ChangeEvent arg0) {
 				String value = listBox.getValue(listBox.getSelectedIndex());
-				if(value.equals(NULL)) {
+				if(value.equals("")) {
 					setProperty(null);
 				} else if(value.equals(TRUE)) {
 					setProperty(true);
