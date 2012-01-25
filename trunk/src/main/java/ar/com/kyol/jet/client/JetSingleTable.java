@@ -64,5 +64,4 @@ public class JetSingleTable<E extends Reflection> extends JetTable<E> {
 	protected int getFirstRowNumber() {
 		return 1;
 	}
-
 }
