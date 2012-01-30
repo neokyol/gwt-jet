@@ -68,6 +68,7 @@ public class JetViewTableHelper {
 			wrapper = new HTMLWrapper(objSetter, html);
 		
 		wrapper.setColumn(new Integer(column));
+		//FIXME BUG - rowoffset not necessary
 		wrapper.setRow(new Integer(row-rowoffset));
 		
 		wrapper.initWrapper(objSetter);
