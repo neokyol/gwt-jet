@@ -121,6 +121,14 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	public abstract void setValues(List<E> values);
 	protected abstract int getFirstRowNumber();
 	
+	public void hideRow(int rowNumber) {
+		getContent().getRowFormatter().setVisible(rowNumber, false);
+	}
+	
+	public void showRow(int rowNumber) {
+		getContent().getRowFormatter().setVisible(rowNumber, true);
+	}
+	
 	private void applyDataRowStyles() {
 		HTMLTable.RowFormatter rf = this.getContent().getRowFormatter();
 
