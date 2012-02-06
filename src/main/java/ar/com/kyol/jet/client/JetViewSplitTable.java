@@ -32,7 +32,7 @@ public class JetViewSplitTable<E extends Reflection> extends JetSplitTable<E> {
 	@Override
 	protected Wrapper createWrapperWidget(ObjectSetter objSetter,
 			JetColumn<E> jetColumn, int column, int row) {
-		return new JetViewTableHelper().createWrapperWidget(objSetter, jetColumn, column, row, getFirstRowNumber());
+		return new JetViewTableHelper().createWrapperWidget(objSetter, jetColumn, column, row);
 	}
 	
 	public void addColumnWithHandler(String columnName, String title, String contentStyle,

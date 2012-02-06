@@ -27,7 +27,7 @@ public class JetViewTableHelper {
 
 	@SuppressWarnings("rawtypes")
 	public Wrapper createWrapperWidget(ObjectSetter objSetter,
-			 JetColumn jetColumn, int column, int row, int rowoffset) {
+			 JetColumn jetColumn, int column, int row) {
 		if(objSetter!=null){
 			objSetter.setReadOnlyCondition(ReadOnlyCondition.ALWAYS);
 		}
@@ -68,8 +68,7 @@ public class JetViewTableHelper {
 			wrapper = new HTMLWrapper(objSetter, html);
 		
 		wrapper.setColumn(new Integer(column));
-		//FIXME BUG - rowoffset not necessary
-		wrapper.setRow(new Integer(row-rowoffset));
+		wrapper.setRow(new Integer(row));
 		
 		wrapper.initWrapper(objSetter);
 
