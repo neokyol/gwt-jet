@@ -43,7 +43,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- convenience to define GWT version in one place -->
-		<gwt.version>2.2.1.NOTZ</gwt.version>
+		<gwt.version>2.2.0</gwt.version>
 
 		<!-- tell the compiler we can use 1.6 -->
 		<maven.compiler.source>1.6</maven.compiler.source>
