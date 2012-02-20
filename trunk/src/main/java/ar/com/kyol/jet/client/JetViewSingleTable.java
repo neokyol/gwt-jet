@@ -33,7 +33,7 @@ public class JetViewSingleTable<E extends Reflection> extends JetSingleTable<E> 
 	@Override
 	protected Wrapper createWrapperWidget(ObjectSetter objSetter,
 			JetColumn<E> jetColumn, int column, int row) {
-		return new JetViewTableHelper().createWrapperWidget(objSetter, jetColumn, column, row);
+		return new JetViewTableHelper().createWrapperWidget(objSetter, jetColumn, column, row-1); //because first row with content in viewsingle is 1
 	}
 	
 	public void addColumnWithHandler(String columnName, String title, String contentStyle,

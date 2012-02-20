@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Widget;
 import com.gwtent.reflection.client.Reflection;
 
 /**
@@ -63,5 +64,25 @@ public class JetSingleTable<E extends Reflection> extends JetTable<E> {
 	@Override
 	protected int getFirstRowNumber() {
 		return 1;
+	}
+	
+	@Override
+	public Widget getCellContent(int row, int column) {
+		return super.getCellContent(row+1, column);
+	}
+	
+	@Override
+	public void setEnabledRow(int row, boolean enabled) {
+		super.setEnabledRow(row+1, enabled);
+	}
+	
+	@Override
+	public List<Widget> getRow(int row) {
+		return super.getRow(row+1);
+	}
+	
+	@Override
+	public void setRowVisible(int rowNumber, boolean visible) {
+		super.setRowVisible(rowNumber+1, visible);
 	}
 }

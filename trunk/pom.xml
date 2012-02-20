@@ -4,7 +4,7 @@
 
 	<groupId>ar.com.kyol</groupId>
 	<artifactId>gwt-jet</artifactId>
-	<version>1.0.8.4</version>
+	<version>1.0.8.5</version>
 	<packaging>jar</packaging>
 
 	<name>gwt-jet</name>
