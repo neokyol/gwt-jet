@@ -54,6 +54,14 @@ public class HTMLWrapper extends Wrapper {
 				NumberFormat nf = NumberFormat.getFormat(getFormat("0.00"));
 				Float valor = (Float)objSetter.getValue();
 				html.setText(nf.format(valor));
+			}else if(objSetter.getValue() instanceof Long){
+				NumberFormat nf = NumberFormat.getFormat(getFormat("0"));
+				Long valor = (Long)objSetter.getValue();
+				html.setText(nf.format(valor));
+			}else if(objSetter.getValue() instanceof Integer){
+				NumberFormat nf = NumberFormat.getFormat(getFormat("0"));
+				Integer valor = (Integer)objSetter.getValue();
+				html.setText(nf.format(valor));
 			}else if(objSetter.getValue() instanceof java.util.Date){
 				java.util.Date utilDate = (java.util.Date)objSetter.getValue();
 				html.setText(DateTimeFormat.getFormat(getFormat("dd/MM/yyyy")).format(utilDate));
