@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtent.reflection.client.Reflection;
+import ar.com.kyol.jet.client.Reflection;
 
 /**
  * A single implementation of a JetTable

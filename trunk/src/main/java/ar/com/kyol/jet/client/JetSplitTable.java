@@ -24,7 +24,7 @@ import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtent.reflection.client.Reflection;
+import ar.com.kyol.jet.client.Reflection;
 
 /**
  * A JetTable implementation that has a fixed header. It does not use the extended FlexTable but rather

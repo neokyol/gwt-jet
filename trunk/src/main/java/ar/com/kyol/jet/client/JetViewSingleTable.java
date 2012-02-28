@@ -18,7 +18,7 @@ package ar.com.kyol.jet.client;
 import ar.com.kyol.jet.client.wrappers.Wrapper;
 
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.gwtent.reflection.client.Reflection;
+import ar.com.kyol.jet.client.Reflection;
 
 /**
  * A JetSingleTable used for views only. The automatically wrapper widgets used here do not update values

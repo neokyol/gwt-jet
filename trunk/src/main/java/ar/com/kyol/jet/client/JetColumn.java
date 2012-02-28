@@ -25,7 +25,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.ValueBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
-import com.gwtent.reflection.client.Reflection;
+import ar.com.kyol.jet.client.Reflection;
 
 public class JetColumn<E extends Reflection> {
 	
