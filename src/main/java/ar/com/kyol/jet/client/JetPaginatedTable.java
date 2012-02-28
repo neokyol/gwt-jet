@@ -28,7 +28,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.gwtent.reflection.client.Reflection;
+import ar.com.kyol.jet.client.Reflection;
 
 /**
  * Abstract wrapper to make a JetTable use a pagination behaviour.
