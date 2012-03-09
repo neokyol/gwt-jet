@@ -42,6 +42,26 @@ public class JetSingleTable<E extends Reflection> extends JetTable<E> {
 		addColumns();
 	}
 
+	/**
+	 * This method includes the header in the count. If you want the number of 
+	 * data rows only, use getRowDataCount() instead.
+	 */
+	@Override
+	public int getRowCount() {
+		return super.getRowCount();
+	}
+	
+	/**
+	 * @return the number of data rows (that is, excluding the header).
+	 */
+	public int getRowDataCount(){
+		int rowCount = 0;
+		if(values!=null){
+			rowCount = values.size();
+		}
+		return rowCount;
+	}
+	
 	@Override
 	public void setValues(List<E> values) {
 		this.removeAllRows();

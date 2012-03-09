@@ -54,6 +54,10 @@ public class HTMLWrapper extends Wrapper {
 				NumberFormat nf = NumberFormat.getFormat(getFormat("0.00"));
 				Float valor = (Float)objSetter.getValue();
 				html.setText(nf.format(valor));
+			}else if(objSetter.getValue() instanceof Double){
+				NumberFormat nf = NumberFormat.getFormat(getFormat("0.00"));
+				Double valor = (Double)objSetter.getValue();
+				html.setText(nf.format(valor));
 			}else if(objSetter.getValue() instanceof Long){
 				NumberFormat nf = NumberFormat.getFormat(getFormat("0"));
 				Long valor = (Long)objSetter.getValue();
