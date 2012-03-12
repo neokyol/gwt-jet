@@ -15,6 +15,7 @@
  */
 package ar.com.kyol.jet.client.wrappers;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 
@@ -54,6 +55,10 @@ public class JetComboWrapper<E> extends Wrapper {
 	@Override
 	protected String getValueAsString() {
 		return this.jetCombo.getSelectedItem().toString();
+	}
+
+	public void fireChangeEvent() {
+		ChangeEvent.fireNativeEvent(Document.get().createChangeEvent(), getWrappedWidget());
 	}
 
 }
