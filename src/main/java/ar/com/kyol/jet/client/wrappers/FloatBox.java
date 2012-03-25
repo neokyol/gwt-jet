@@ -102,5 +102,9 @@ public class FloatBox extends TextBox {
 	public Float getFloat() {
 		return new Float(this.getText());
 	}
+	
+	public Double getDouble() {
+		return new Double(this.getText());
+	}
 
 }

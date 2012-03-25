@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 
 import ar.com.kyol.jet.client.wrappers.CheckBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.DateBoxWrapper;
+import ar.com.kyol.jet.client.wrappers.DoubleBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.FloatBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.GenericWrapper;
 import ar.com.kyol.jet.client.wrappers.IntegerBoxWrapper;
@@ -42,7 +43,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.ValueBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
-import ar.com.kyol.jet.client.Reflection;
+import com.gwtent.reflection.client.impl.PrimitiveTypeImpl;
 
 /**
  * A FlexTable that automatically wraps every field to auto-populate the values.
@@ -84,6 +85,12 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		applyDataRowStyles();
 	}
 	
+	public void addValue(E value) {
+		this.values.add(value);
+		addRow(value);
+		applyDataRowStyles();
+	}
+	
 	public void addValueButDoNotShowIt(E value) {
 		this.values.add(value);
 	}
@@ -102,6 +109,18 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 			}
 			rowIndex++;
 		}
+	}
+	
+	protected void addRow(Object obj) {
+		int cell = 0;
+		for (JetColumn<E> jetColumn : jetColumns) {
+			Wrapper wrapper = createWrapperWidget(getProperty(obj, jetColumn.getColumnName()), jetColumn, cell, rowIndex);
+			this.getContent().setWidget(rowIndex, cell, wrapper);
+			this.getContent().getCellFormatter().addStyleName(rowIndex, cell,
+					"JetTable-Cell");
+			cell++;
+		}
+		rowIndex++;
 	}
 	
 	public void addNewRow(List<Widget> widgets) {
@@ -159,20 +178,24 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 					return (Widget) objSetter.getValue();
 				}
 			};
+		} else if (objSetter.isOfType(String.class)) {
+			wrapper = new TextBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Date.class)) {
 			wrapper = new DateBoxWrapper((Date) objSetter.getValue(), objSetter);
 		} else if (objSetter.isOfType(java.sql.Date.class)) {
 			wrapper = new SqlDateBoxWrapper((java.sql.Date) objSetter.getValue(), objSetter);
 		} else if (objSetter.isOfType(java.sql.Timestamp.class)) {
 			wrapper = new TimestampBoxWrapper((java.sql.Timestamp) objSetter.getValue());
-		} else if (objSetter.isOfType(Boolean.class)) {
+		} else if (objSetter.isOfType(Boolean.class) || objSetter.isOfType(PrimitiveTypeImpl.BOOLEAN.getQualifiedSourceName())) {
 			wrapper = new CheckBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(String.class)) {
-			wrapper = new TextBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Integer.class)) {
+		} else if (objSetter.isOfType(Integer.class) || objSetter.isOfType(PrimitiveTypeImpl.INT.getQualifiedSourceName())) {
 			wrapper = new IntegerBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Float.class)) {
+		} else if (objSetter.isOfType(Float.class) || objSetter.isOfType(PrimitiveTypeImpl.FLOAT.getQualifiedSourceName())) {
 			wrapper = new FloatBoxWrapper(objSetter);
+		} else if (objSetter.isOfType(Long.class) || objSetter.isOfType(PrimitiveTypeImpl.LONG.getQualifiedSourceName())) {
+			wrapper = new IntegerBoxWrapper(objSetter);
+		} else if (objSetter.isOfType(Double.class) || objSetter.isOfType(PrimitiveTypeImpl.DOUBLE.getQualifiedSourceName())) {
+			wrapper = new DoubleBoxWrapper(objSetter);
 		} else if (objSetter.getValue() == null) {
 			//TODO change to labelWrapper	wrapper = new LabelWrapper("");
 			wrapper = new TextBoxWrapper(objSetter);
