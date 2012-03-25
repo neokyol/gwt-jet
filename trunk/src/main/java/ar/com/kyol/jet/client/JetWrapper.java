@@ -19,8 +19,10 @@ import java.util.Date;
 
 import ar.com.kyol.jet.client.wrappers.CheckBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.DateBoxWrapper;
+import ar.com.kyol.jet.client.wrappers.DoubleBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.FloatBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.IntegerBoxWrapper;
+import ar.com.kyol.jet.client.wrappers.LongBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.SqlDateBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.TextBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.TimestampBoxWrapper;
@@ -130,6 +132,8 @@ public class JetWrapper {
 		
 		if(wrapperGenerator != null) {
 			wrapper = wrapperGenerator.generateWrapper(objSetter);
+		} else if (objSetter.isOfType(String.class)) {
+			wrapper = new TextBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Date.class)) {
 			wrapper = new DateBoxWrapper((Date) objSetter.getValue(), objSetter);
 		} else if (objSetter.isOfType(java.sql.Date.class)) {
@@ -138,18 +142,20 @@ public class JetWrapper {
 			wrapper = new TimestampBoxWrapper((java.sql.Timestamp) objSetter.getValue());
 		} else if (objSetter.isOfType(Boolean.class) || objSetter.isOfType("boolean")) {
 			wrapper = new CheckBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(String.class)) {
-			wrapper = new TextBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Integer.class) || objSetter.isOfType("int")) {
 			wrapper = new IntegerBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Float.class)  || objSetter.isOfType("float")) {
 			wrapper = new FloatBoxWrapper(objSetter);
+		} else if (objSetter.isOfType(Long.class)  || objSetter.isOfType("long")) {
+			wrapper = new LongBoxWrapper(objSetter);
+		} else if (objSetter.isOfType(Double.class)  || objSetter.isOfType("double")) {
+			wrapper = new DoubleBoxWrapper(objSetter);
 		} else if (objSetter.getValue() == null) {
 			wrapper = new TextBoxWrapper(objSetter);
 		} else
 			wrapper = new TextBoxWrapper(objSetter);
 		
-		wrapper.setColumn(0); //back compatibility
+		wrapper.setColumn(0); //backward compatibility
 		wrapper.setRow(0);
 		
 		wrapper.initWrapper(objSetter);

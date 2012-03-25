@@ -44,6 +44,8 @@ public class NumericBox extends TextBox {
 				case KeyCodes.KEY_BACKSPACE:
 				case KeyCodes.KEY_DELETE:
 				case KeyCodes.KEY_TAB:
+				case KeyCodes.KEY_HOME:
+				case KeyCodes.KEY_END:
 					return;
 				}
 				
