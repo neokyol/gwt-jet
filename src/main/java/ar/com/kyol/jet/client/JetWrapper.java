@@ -145,11 +145,11 @@ public class JetWrapper {
 		} else if (objSetter.isOfType(Integer.class) || objSetter.isOfType("int")) {
 			wrapper = new IntegerBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Float.class)  || objSetter.isOfType("float")) {
-			wrapper = new FloatBoxWrapper(objSetter);
+			wrapper = new FloatBoxWrapper(objSetter, 2, false);
 		} else if (objSetter.isOfType(Long.class)  || objSetter.isOfType("long")) {
 			wrapper = new LongBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Double.class)  || objSetter.isOfType("double")) {
-			wrapper = new DoubleBoxWrapper(objSetter);
+			wrapper = new DoubleBoxWrapper(objSetter, 2, false);
 		} else if (objSetter.getValue() == null) {
 			wrapper = new TextBoxWrapper(objSetter);
 		} else

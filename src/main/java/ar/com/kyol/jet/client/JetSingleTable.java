@@ -16,6 +16,7 @@
 package ar.com.kyol.jet.client;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.google.gwt.user.client.ui.FlexTable;
@@ -63,7 +64,7 @@ public class JetSingleTable<E extends Reflection> extends JetTable<E> {
 	}
 	
 	@Override
-	public void setValues(List<E> values) {
+	public void setValues(Collection<E> values) {
 		this.removeAllRows();
 		rowIndex = getFirstRowNumber();
 		this.values = new ArrayList<E>(); 

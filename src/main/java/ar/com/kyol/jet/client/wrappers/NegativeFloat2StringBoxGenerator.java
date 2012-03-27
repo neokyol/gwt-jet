@@ -17,11 +17,19 @@ package ar.com.kyol.jet.client.wrappers;
 
 import ar.com.kyol.jet.client.ObjectSetter;
 
+/**
+ * A generator for numeric boxes accepting 3 decimal digits and negative sign.
+ * Sets the value as String.
+ * 
+ * @author fpugnali
+ * @author smuzzopappa
+ *
+ */
 public class NegativeFloat2StringBoxGenerator extends WrapperGenerator {
 
 	@Override
 	public Wrapper generateWrapper(ObjectSetter objSetter) {
-		return new NegativeFloatBoxWrapper(objSetter, true);
+		return new FloatBoxWrapper(objSetter, true, 3, true);
 	}
 	
 }

@@ -21,7 +21,7 @@ public class FloatBoxGenerator extends WrapperGenerator {
 
 	@Override
 	public Wrapper generateWrapper(ObjectSetter objSetter) {
-		return new FloatBoxWrapper(objSetter);
+		return new FloatBoxWrapper(objSetter, 2, false);
 	}
 	
 }

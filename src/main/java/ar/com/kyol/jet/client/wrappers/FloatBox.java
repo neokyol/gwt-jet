@@ -26,12 +26,15 @@ public class FloatBox extends TextBox {
 	
 	/**
 	 * Instantiates a new float box.
+	 * 
+	 * @param maximumFractionDigits - 1 or more digits
+	 * @param acceptNegatives - true if you want to allow the minus sign
 	 */
-	public FloatBox() {
+	public FloatBox(final int maximumFractionDigits, final boolean acceptNegatives) {
 		sinkEvents(Event.ONPASTE);
 		//addKeyPressHandler(new KeyPressHandler() {
 		addKeyDownHandler(new KeyDownHandler() {
-			//TODO pasar a clase padre en común con NegativeFloatBox y demás (en realidad numericBox es la primera)
+
 			@Override
 			//public void onKeyPress(KeyPressEvent event) { //GWT bug: Issue 5558: 	KeyPressEvent.getCharCode returns zero for special keys like enter, escape, tab
 			public void onKeyDown(KeyDownEvent event) {
@@ -49,11 +52,20 @@ public class FloatBox extends TextBox {
 					return;
 				}
 				
-				if((event.getNativeKeyCode()) == 188 || event.getNativeKeyCode() == 110) { //comma and decimal separator
+				if(event.getNativeKeyCode() == 109 || event.getNativeKeyCode() == 189) {  //minus sign or dash
+					if((getCursorPos() != 0) || getValue().contains("-") || !acceptNegatives) {
+						((TextBoxBase)event.getSource()).cancelKey();
+					} else {
+						return;
+					}
+				}
+				
+				if(event.getNativeKeyCode() == 188 || event.getNativeKeyCode() == 190 || event.getNativeKeyCode() == 110 ) { //comma, point and decimal separator
+					//TODO internationalization!!! use com.google.gwt.i18n.client.LocaleInfo.getNumberConstants().decimalSeparator()
 					if(getValue().contains(".")) {
 						((TextBoxBase)event.getSource()).cancelKey();
 					} else {
-						if(getCursorPos() < getValue().length() - 2) {
+						if(getCursorPos() < getValue().length() - maximumFractionDigits) {
 							((TextBoxBase)event.getSource()).cancelKey();
 						} else {
 							return;
@@ -62,15 +74,15 @@ public class FloatBox extends TextBox {
 				}
 				
 				if(((event.getNativeKeyCode() < 48 || event.getNativeKeyCode() > 57) &&	//numeric keys
-					(event.getNativeKeyCode() < 96 || event.getNativeKeyCode() > 106))	//numeric pad
-						|| event.isAnyModifierKeyDown() || event.isAltKeyDown()) { 
+						(event.getNativeKeyCode() < 96 || event.getNativeKeyCode() > 105))	//numeric pad
+							|| event.isAnyModifierKeyDown() || event.isAltKeyDown()) { 
 					((TextBoxBase)event.getSource()).cancelKey();
 				} else {
 					if(getValue().contains(".")) {
 						int cursorPos = getCursorPos();
 						int posicionPunto = getValue().indexOf(".");
 						int longitudTexto = getValue().length();
-						if(cursorPos > posicionPunto && longitudTexto >= posicionPunto + 3) {
+						if(cursorPos > posicionPunto && longitudTexto >= posicionPunto + 1 + maximumFractionDigits) {
 							((TextBoxBase)event.getSource()).cancelKey();
 						}
 					}
@@ -96,7 +108,7 @@ public class FloatBox extends TextBox {
 	
 	@Override
 	public String getText() {
-		return super.getText().replace(',', '.');
+		return super.getText().replace(',', '.'); //TODO check internationalization todo up there
 	}
 	
 	public Float getFloat() {
@@ -106,5 +118,5 @@ public class FloatBox extends TextBox {
 	public Double getDouble() {
 		return new Double(this.getText());
 	}
-
+	
 }

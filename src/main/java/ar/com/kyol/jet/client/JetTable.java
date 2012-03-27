@@ -16,6 +16,7 @@
 package ar.com.kyol.jet.client;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -79,7 +80,7 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	}
 	
 	//TODO what if they want to add without a previous set?
-	public void addValues(List<E> values) {
+	public void addValues(Collection<E> values) {
 		this.values.addAll(values);
 		addRows(values);
 		applyDataRowStyles();
@@ -95,7 +96,7 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		this.values.add(value);
 	}
 	
-	protected void addRows(List<? extends Object> objs) {
+	protected void addRows(Collection<? extends Object> objs) {
 
 		//TODO optimize this, every row is equal and reflection is costly
 		for (Object obj : objs) {
@@ -137,7 +138,7 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	
 	protected abstract FlexTable getContent();
 	protected abstract FlexTable getHeader();
-	public abstract void setValues(List<E> values);
+	public abstract void setValues(Collection<E> values);
 	protected abstract int getFirstRowNumber();
 	
 	public void setRowVisible(int rowNumber, boolean visible) {
@@ -191,11 +192,11 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		} else if (objSetter.isOfType(Integer.class) || objSetter.isOfType(PrimitiveTypeImpl.INT.getQualifiedSourceName())) {
 			wrapper = new IntegerBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Float.class) || objSetter.isOfType(PrimitiveTypeImpl.FLOAT.getQualifiedSourceName())) {
-			wrapper = new FloatBoxWrapper(objSetter);
+			wrapper = new FloatBoxWrapper(objSetter, 2, false);
 		} else if (objSetter.isOfType(Long.class) || objSetter.isOfType(PrimitiveTypeImpl.LONG.getQualifiedSourceName())) {
 			wrapper = new IntegerBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Double.class) || objSetter.isOfType(PrimitiveTypeImpl.DOUBLE.getQualifiedSourceName())) {
-			wrapper = new DoubleBoxWrapper(objSetter);
+			wrapper = new DoubleBoxWrapper(objSetter, 2, false);
 		} else if (objSetter.getValue() == null) {
 			//TODO change to labelWrapper	wrapper = new LabelWrapper("");
 			wrapper = new TextBoxWrapper(objSetter);

@@ -8,11 +8,13 @@
 .JetTable-Cell 
 {
   font-family: Trebuchet MS;
-  font-size: 11px;
+  font-size: 12px;
+  empty-cells: show;
 }
 .JetTable {
   border-collapse: separate;
   border-spacing: 1px;
+ 
   /*   border: 1px solid #000000; */
 }
 
@@ -33,15 +35,15 @@
 }
 
 .JetTable-contentPanel {
-	height: 300px;
+	max-height: 300px;
 }
 .JetTable-ColumnLabel {
   background: #0099cc;
   height: 36.5px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-weight: bold;
   color: #ffffff;
-  line-height: 11px;
+  /* line-height: 11px; */
   vertical-align: top;
 }
 
@@ -51,6 +53,7 @@
   margin-top: 6px;
   
 }
+
 /*.JetTable-ColumnLabelCell div {
   margin-left: 9px;
   margin-top: 6px;
@@ -58,6 +61,10 @@
 }*/
 .JetTable-Cell {
   border-width: 0px 0px 0px 0px;
+}
+.gwt-Label-navigator-gwtjet,
+.gwt-Anchor-gwtjet {
+	margin-right:5px;
 }
 
 input[type=radio], input[type=checkbox] {
