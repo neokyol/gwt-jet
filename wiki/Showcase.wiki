@@ -1,0 +1,19 @@
+#summary gwt-jet showcase
+
+= Introduction =
+
+Here is a little showcase with cool examples for you to download.
+
+
+= Details =
+
+Requirements:
+
+  * Maven 2.2.0 or later
+  * GWT 2.2.0 or later (pom will try to configure 2.4.0, but it'll work with 2.2.0)
+
+
+download from git-hub:
+*git clone git://github.com/neokyol/gwt-jet-showcase.git*
+
+or check Downloads page if you hate git
