@@ -30,8 +30,8 @@ public class DoubleBoxWrapper extends Wrapper {
 	 *
 	 * @param objSetter the obj setter
 	 */
-	public DoubleBoxWrapper(ObjectSetter objSetter) {
-		this(objSetter, false);
+	public DoubleBoxWrapper(ObjectSetter objSetter, int maximumFractionDigits, boolean acceptNegatives) {
+		this(objSetter, false, maximumFractionDigits, acceptNegatives);
 	}
 	
 	/**
@@ -40,8 +40,8 @@ public class DoubleBoxWrapper extends Wrapper {
 	 * @param objSetter the obj setter
 	 * @param useValueAsString the use value as string
 	 */
-	public DoubleBoxWrapper(ObjectSetter objSetter, boolean useValueAsString) {
-		this(objSetter, new FloatBox(), useValueAsString);
+	public DoubleBoxWrapper(ObjectSetter objSetter, boolean useValueAsString, int maximumFractionDigits, boolean acceptNegatives) {
+		this(objSetter, new FloatBox(maximumFractionDigits, acceptNegatives), useValueAsString);
 	}
 	
 	/**

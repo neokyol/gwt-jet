@@ -16,6 +16,7 @@
 package ar.com.kyol.jet.client;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import ar.com.kyol.jet.client.wrappers.Wrapper;
@@ -55,14 +56,15 @@ public class JetSplitTable<E extends Reflection> extends JetTable<E> {
 	}
 
 	@Override
-	public void setValues(List<E> values) {
+	public void setValues(Collection<E> values) {
 		setValues(values, true);
 	}
 	
-	public void setValues(List<E> values, boolean withScroll) {
+	public void setValues(Collection<E> values, boolean withScroll) {
 		setValues(values,withScroll,null);
 	}
-	public void setValues(List<E> values, boolean withScroll, String jetTableContentPanelClass) {
+	
+	public void setValues(Collection<E> values, boolean withScroll, String jetTableContentPanelClass) {
 		encabezado.removeAllRows();
 		contenido.removeAllRows();
 		this.removeAllRows();

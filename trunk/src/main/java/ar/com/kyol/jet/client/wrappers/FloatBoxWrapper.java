@@ -29,9 +29,11 @@ public class FloatBoxWrapper extends Wrapper {
 	 * Instantiates a new float box wrapper.
 	 *
 	 * @param objSetter the obj setter
+	 * @param maximumFractionDigits
+	 * @param acceptNegatives
 	 */
-	public FloatBoxWrapper(ObjectSetter objSetter) {
-		this(objSetter, false);
+	public FloatBoxWrapper(ObjectSetter objSetter, int maximumFractionDigits, boolean acceptNegatives) {
+		this(objSetter, false, maximumFractionDigits, acceptNegatives);
 	}
 	
 	/**
@@ -39,9 +41,11 @@ public class FloatBoxWrapper extends Wrapper {
 	 *
 	 * @param objSetter the obj setter
 	 * @param useValueAsString the use value as string
+	 * @param maximumFractionDigits
+	 * @param acceptNegatives
 	 */
-	public FloatBoxWrapper(ObjectSetter objSetter, boolean useValueAsString) {
-		this(objSetter, new FloatBox(), useValueAsString);
+	public FloatBoxWrapper(ObjectSetter objSetter, boolean useValueAsString, int maximumFractionDigits, boolean acceptNegatives) {
+		this(objSetter, new FloatBox(maximumFractionDigits, acceptNegatives), useValueAsString);
 	}
 	
 	/**

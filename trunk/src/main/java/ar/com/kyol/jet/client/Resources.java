@@ -11,4 +11,7 @@ public interface Resources extends ClientBundle {
 	@Source("images/editar.gif")
 	ImageResource editar();
 	
+	@Source("images/gwt-jet-loader.gif")
+	ImageResource loader();
+	
 }

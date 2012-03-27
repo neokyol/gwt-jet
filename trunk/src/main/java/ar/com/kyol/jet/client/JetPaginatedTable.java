@@ -18,40 +18,55 @@ package ar.com.kyol.jet.client;
 import java.util.List;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import ar.com.kyol.jet.client.Reflection;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Abstract wrapper to make a JetTable use a pagination behaviour.
  * 
- * @author klarsk
+ * If useHyperlinks is enabled, the navigation occurs with /p(+pageNumber) hyperlinks, and
+ * it's up to the web application to manage the new history tokens calling this class refresh() method.
+ * 
+ * @author fpugnali
+ * @author smuzzopappa
  *
  * @param <E>
  */
 public abstract class JetPaginatedTable<E extends Reflection> extends Composite {
 	
 	protected JetTable<E> jetTable;
+	protected boolean useHyperlinks;
 	protected int from;
 	protected int qty;
 	protected int qtyRetrieved;
 	protected int total;
 	protected int page = 1;
-	protected Panel mainPanel;
+	protected AbsolutePanel mainPanel;
 	protected Panel navigationPanel;
 	
 	public JetPaginatedTable() {
+		this(true);
+	}
+	
+	public JetPaginatedTable(boolean useHyperlinks) {
+		this.useHyperlinks = useHyperlinks;
 		Panel totalPanel = new VerticalPanel();
 		navigationPanel = new HorizontalPanel();
-		mainPanel = new VerticalPanel();
+		mainPanel = new AbsolutePanel();
 		totalPanel.add(mainPanel);
 		this.jetTable = getJetTable();
 		mainPanel.add(jetTable);
@@ -66,26 +81,19 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 		if(qtyRetrieved == 0) from = 0; //for empty lists
 		if(from > 0) {
 			if(from+1 > (qty + 2)) {
-				Hyperlink first = new Hyperlink("<< "+Jet.constants.oldest(), this.getPlainToken()+"/p1");
-				first.getElement().getStyle().setMarginRight(5, Unit.PX);
-				navigationPanel.add(first);
+				addOldest();
 			}
-			Hyperlink previous = new Hyperlink("< "+Jet.constants.older(), this.getPlainToken()+"/p"+(page-1));
-			previous.getElement().getStyle().setMarginRight(5, Unit.PX);
-			navigationPanel.add(previous);
+			addOlder();
 		}
 		Label label = new Label((from+1)+" - "+(to+1)+" "+Jet.constants.of()+" "+total);
+		label.addStyleDependentName("navigator-gwtjet");
 		//label.setWidth("130px");
 		label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		navigationPanel.add(label);
 		if(from+qtyRetrieved < total && total != 0) {
-			Hyperlink next = new Hyperlink(Jet.constants.newer()+" >", this.getPlainToken()+"/p"+(page+1));
-			next.getElement().getStyle().setMarginLeft(5, Unit.PX);
-			navigationPanel.add(next);
+			addNewer();
 			if(from+qtyRetrieved < (total - qty)) {
-				Hyperlink last = new Hyperlink(Jet.constants.newest()+" >>", this.getPlainToken()+"/p"+(int)Math.ceil(Float.valueOf(total) / qty));
-				last.getElement().getStyle().setMarginLeft(5, Unit.PX);
-				navigationPanel.add(last);
+				addNewest();
 			}
 		}
 		//
@@ -126,30 +134,97 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 		//
 		//-------------------------------------------------------------------------------------------
 	}
+
+	private void addNewest() {
+		String label = Jet.constants.newest()+" >>";
+		int newest = (int)Math.ceil(Float.valueOf(total) / qty);
+		Widget last;
+		if(useHyperlinks) {
+			last = new Hyperlink(label, this.getPlainToken()+"/p"+newest);
+			last.getElement().getStyle().setMarginLeft(5, Unit.PX);
+		} else {
+			last = createAnchor(label, newest);
+		}
+		navigationPanel.add(last);
+	}
+
+	private void addNewer() {
+		String label = Jet.constants.newer()+" >";
+		Widget next;
+		if(useHyperlinks) {
+			next = new Hyperlink(label, this.getPlainToken()+"/p"+(page+1));
+			next.getElement().getStyle().setMarginLeft(5, Unit.PX);
+		} else {
+			next = createAnchor(label, page+1);
+		}
+		navigationPanel.add(next);
+	}
+
+	private void addOlder() {
+		String label = "< "+Jet.constants.older();
+		Widget previous;
+		if(useHyperlinks) {
+			previous = new Hyperlink(label, this.getPlainToken()+"/p"+(page-1));
+			previous.getElement().getStyle().setMarginRight(5, Unit.PX);
+		} else {
+			previous = createAnchor(label, page-1);
+		}
+		navigationPanel.add(previous);
+	}
+	
+	private void addOldest() {
+		String label = "<< "+Jet.constants.oldest();
+		Widget first;
+		if(useHyperlinks) {
+			first = new Hyperlink(label, this.getPlainToken()+"/p1");
+			first.getElement().getStyle().setMarginRight(5, Unit.PX);
+		} else {
+			first = createAnchor(label, 1);
+		}
+		navigationPanel.add(first);
+	}
+	
+	private Anchor createAnchor(String label, final int page) {
+		Anchor anchor = new Anchor(label);
+		anchor.addStyleDependentName("gwtjet");
+		anchor.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				JetPaginatedTable.this.page = page;
+				refresh();
+			}
+		});
+		return anchor;
+	}
 	
 	/**
 	 * Check the requested page from the History token and returns a value for FROM.
+	 * If useHyperlinks is disabled, return the FROM according to current page.
 	 * 
 	 * @return from
 	 */
 	protected int getRequestedPageFrom() {
-		String token = History.getToken(); 
-		int pagePos = token.indexOf("/p")+2;
-		if(pagePos > 1 && !token.equals("")) {
-			String sPage = token.substring(pagePos);
-			StringBuffer sb = new StringBuffer();
-			for(int i=0;i<sPage.length();i++) {
-				if(!Character.isDigit(sPage.charAt(i))) break;
-				sb.append(sPage.substring(i, i+1));
+		if(useHyperlinks) {
+			String token = History.getToken(); 
+			int pagePos = token.indexOf("/p")+2;
+			if(pagePos > 1 && !token.equals("")) {
+				String sPage = token.substring(pagePos);
+				StringBuffer sb = new StringBuffer();
+				for(int i=0;i<sPage.length();i++) {
+					if(!Character.isDigit(sPage.charAt(i))) break;
+					sb.append(sPage.substring(i, i+1));
+				}
+				if(sb.length()>0) {
+					page = Integer.parseInt(sb.toString());
+				} else {
+					page = 1;
+				}
+			} else {
+				page = 1;
 			}
-			if(sb.length()>0) {
-				page = Integer.parseInt(sb.toString());
-				return (page * qty) - qty;
-			}
-		} else {
-			page = 1;
 		}
-		return 0;
+		return (page * qty) - qty;
 	}
 	
 	/**
@@ -166,8 +241,19 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 	}
 	
 	public void refresh() {
-		//TODO loading message Crawler.getErrorLabel().setText("Loading...");
-		//this.mainPanel.clear();
+		if(!useHyperlinks) {
+			AbsolutePanel panel = new AbsolutePanel();
+			panel.getElement().getStyle().setOpacity(0.3d);
+			panel.setHeight(""+jetTable.getOffsetHeight()+"px");
+			panel.setWidth(""+jetTable.getOffsetWidth()+"px");
+			panel.getElement().getStyle().setBackgroundColor("black");
+			Image loader = new Image();
+			loader.setResource(Resources.INSTANCE.loader());
+			SimplePanel panelLoader = new SimplePanel();
+			panelLoader.add(loader);
+			this.mainPanel.add(panelLoader, jetTable.getOffsetWidth() / 2, jetTable.getOffsetHeight() / 2);
+			this.mainPanel.add(panel, 0, navigationPanel.getOffsetHeight());
+		}
 		this.from = this.getRequestedPageFrom();
 		getTotalRows(new AsyncCallback<Integer>() {
 			
@@ -205,17 +291,17 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 		
 		this.jetTable.setValues(values);
 		
+		this.navigationPanel.clear();
 		addNavigationLinks();
 		
 		Panel verticalPanel = new VerticalPanel();
 		verticalPanel.add(navigationPanel);
 		verticalPanel.add(jetTable);
 		
-		Panel listPanel = new DecoratorPanel();
-		listPanel.add(verticalPanel);
-		
 		mainPanel.clear();
-		mainPanel.add(listPanel);
+		mainPanel.add(verticalPanel);
+		
+		tableRefreshed();
 	}
 	
 	protected abstract void onAnyError(Throwable t);
@@ -227,5 +313,7 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 	protected abstract int getPageSize();
 	
 	protected abstract JetTable<E> getJetTable();
+	
+	protected abstract void tableRefreshed();
 
 }
