@@ -11,6 +11,8 @@ Requirements:
 
   * Maven 2.2.0 or later
   * GWT 2.2.0 or later (pom will try to configure 2.4.0, but it'll work with 2.2.0)
+  * Java 6
+  * some web container (cooler if you use Jetty thru eclipse gwt plugin)
 
 
 download from git-hub:
