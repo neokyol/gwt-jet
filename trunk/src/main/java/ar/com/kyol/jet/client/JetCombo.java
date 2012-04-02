@@ -23,7 +23,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
-import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasEnabled;
@@ -49,7 +48,6 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 	private boolean cargando = false;
 	private boolean isCreateNew = false;
 	private String createNewDescription;
-	private ChangeHandler changeHandler = null;
 	private boolean hasSeleccioneItem = true;
 	private boolean isEnabled = true;
 	private Integer pendingSelectedIndex = null;
@@ -130,13 +128,8 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 	}
 	
 	@Override
-	public HandlerRegistration addChangeHandler(ChangeHandler arg0) {
-		return listBox.addChangeHandler(arg0);
-	}
-	
-	@Override
-	public void fireEvent(GwtEvent<?> event) {
-		listBox.fireEvent(event);
+	public HandlerRegistration addChangeHandler(ChangeHandler handler) {
+		return addDomHandler(handler, ChangeEvent.getType());
 	}
 
 	private void registerChangeHandler() {
@@ -147,8 +140,6 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 				String value = listBox.getValue(listBox.getSelectedIndex());
 				if(CREATE_NEW.equals(value)) {
 					JetCombo.this.createNewHandler.onCreateNew();
-				} else if(JetCombo.this.changeHandler != null) { //TODO unused code
-					JetCombo.this.changeHandler.onChange(arg0);
 				}
 			}
 		});
