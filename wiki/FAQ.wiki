@@ -1,6 +1,6 @@
 #labels Featured
   * *Does gwt-jet have any dependencies?*
-No. Of course you need GWT 2.2+, but then it's just a single jar file. The great GWT ENT libraries are provided inside the jar.
+No. Of course you need GWT 2.2+, but then it's just a single jar file. The great [http://code.google.com/p/gwt-ent/ GWT ENT] libraries are provided inside the jar.
   * *What versions of GWT are supported?*
 The project has been developed with GWT 2.2 and is also tested with 2.3 and 2.4. We hope next versions will be supported without major changes.
   * *Is it stable for a production environment?*
