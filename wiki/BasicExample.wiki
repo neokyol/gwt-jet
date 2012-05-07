@@ -33,4 +33,4 @@ When the user modifies any value, the corresponding values in your beans will be
 
 Very flexible. Wrappers for most common java types are automatically used (like the ones in the example), but you can create your owns or even redefine inline any to react as you want. The same for the ReadOnlyCondition. And JetTable is a FlexTable so you can format it as usual. The key here is: make it fast, or make it as complex as you like.
 
-Check more examples in the Showcase project
+Check more examples in the [http://code.google.com/p/gwt-jet/wiki/Showcase Showcase] project
