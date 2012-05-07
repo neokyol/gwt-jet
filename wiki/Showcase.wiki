@@ -18,4 +18,4 @@ Requirements:
 download from git-hub:
 *git clone git://github.com/neokyol/gwt-jet-showcase.git*
 
-or check Downloads page if you hate git
+or check [http://code.google.com/p/gwt-jet/downloads/list Downloads] page if you hate git
