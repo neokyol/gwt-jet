@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ar.com.kyol</groupId>
+	<artifactId>gwt-jet</artifactId>
+	<version>1.0.9.1</version>
+	<packaging>jar</packaging>
+
+	<name>gwt-jet</name>
+	<url>http://www.kyol.com.ar</url>
+	<description>The gwt-jet library provides a fast, flexible and easy way to wrap business objects that you want to show 
+		at the front-end. The jet classes automatically create the corresponding widget and automagically populate the user 
+		modified values into the original object.
+	</description>
+	
+	<licenses>
+	    <license>
+	      <name>The Apache Software License, Version 2.0</name>
+	      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+	      <distribution>repo</distribution>
+	    </license>
+	</licenses>
+	<scm>
+	    <url>http://svn.apache.org/viewcvs.cgi/maven</url>
+	    <connection>http://svn.apache.org/viewcvs.cgi/maven</connection>
+	</scm>
+	<developers>
+	    <developer>
+	      <id>siluvana</id>
+	      <name>Silvana Muzzopappa</name>
+	      <email>siluvana@gmail.com</email>
+	    </developer>
+	    <developer>
+	      <id>klarsk</id>
+	      <name>Federico Pugnali</name>
+	      <email>federicopugnali@gmail.com</email>
+	    </developer>
+	</developers>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
+
+	</properties>
+	
+</project>
