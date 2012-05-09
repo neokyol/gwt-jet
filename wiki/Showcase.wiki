@@ -3,7 +3,7 @@
 
 Check the online showcase [http://gwtjet.appspot.com/ here] or download it and run it yourself.
 
-Requirements:
+Requirements to be able to run it:
 
   * Maven 2.2.0 or later
   * GWT 2.2.0 or later (pom will try to configure 2.4.0, but it'll work with 2.2.0)
