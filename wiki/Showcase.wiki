@@ -1,4 +1,5 @@
 #summary gwt-jet showcase
+#labels Featured
 
 = Introduction =
 
