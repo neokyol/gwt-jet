@@ -1,12 +1,7 @@
 #summary gwt-jet showcase
 #labels Featured
 
-= Introduction =
-
-Here is a little showcase with cool examples for you to download.
-
-
-= Details =
+Check the online showcase [http://gwtjet.appspot.com/ here] or download it and run it yourself.
 
 Requirements:
 
