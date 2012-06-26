@@ -16,6 +16,8 @@
 package ar.com.kyol.jet.client;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import ar.com.kyol.jet.client.wrappers.CheckBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.DateBoxWrapper;
@@ -35,6 +37,7 @@ import com.google.gwt.user.client.ui.ValueBoxBase;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.gwtent.reflection.client.ClassType;
 import com.gwtent.reflection.client.NotFoundException;
+import com.gwtent.reflection.client.ReflectionRequiredException;
 import com.gwtent.reflection.client.TypeOracle;
 
 /**
@@ -44,7 +47,7 @@ import com.gwtent.reflection.client.TypeOracle;
  *
  */
 public class JetWrapper {
-	
+	private static final Logger log = Logger.getLogger("");
 	/**
 	 * Creates a Wrapper for the provided object's property, automatically updating it when the associated Widget changes.
 	 * 
@@ -108,17 +111,40 @@ public class JetWrapper {
 			
 			try {
 				objSetter.setValue(cType.invoke(objSetter.getObj(), getter, (Object[]) null));
-				objSetter.setType(cType.findMethod(getter, (String[]) null).getReturnType());
-				objSetter.setSetter("s"+getter.substring(1));
+				if(i == split.length-1) {
+					try {
+						objSetter.setType(cType.findMethod(getter, (String[]) null).getReturnType());
+						objSetter.setSetter("s"+getter.substring(1));
+					} catch (ReflectionRequiredException r) {
+						log.log(Level.SEVERE, "UNKNOWN TYPE. TRYING TO JETWRAP A BOUNDED TYPE PARAMETER (<T extends SomeClass>)?");
+						throw r;
+					}
+				}
 			} catch(NotFoundException e) {
+				objSetter.setReadOnlyCondition(ReadOnlyCondition.ALWAYS); //for both cases, force READ ONLY
 				try {
 					objSetter.setValue(cType.invoke(objSetter.getObj(), split[i], (Object[]) null)); //if getter not found, try directly for a method
-					objSetter.setType(cType.findMethod(split[i], (String[]) null).getReturnType());
+	
+					if(i == split.length-1) {
+						try {
+							objSetter.setType(cType.findMethod(split[i], (String[]) null).getReturnType());
+						} catch (ReflectionRequiredException r) {
+							log.log(Level.SEVERE, "UNKNOWN TYPE. TRYING TO JETWRAP A BOUNDED TYPE PARAMETER (<T extends SomeClass>)?");
+							throw r;
+						}
+					}
+
 				} catch(NotFoundException f) {
 					objSetter.setValue(cType.getFieldValue(objSetter.getObj(), split[i])); //if not, try with the property
-					objSetter.setType(cType.findField(split[i]).getType());
+					if(i == split.length-1) {
+						try {
+							objSetter.setType(cType.findField(split[i]).getType());
+						} catch (ReflectionRequiredException r) {
+							log.log(Level.SEVERE, "UNKNOWN TYPE. TRYING TO JETWRAP A BOUNDED TYPE PARAMETER (<T extends SomeClass>)?");
+							throw r;
+						}
+					}
 				}
-				objSetter.setReadOnlyCondition(ReadOnlyCondition.ALWAYS); //for both cases, force READ ONLY
 			}
 			
 		}
