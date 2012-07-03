@@ -33,11 +33,11 @@ public abstract class WidgetWrapperGenerator extends WrapperGenerator {
 			
 			@Override
 			public Widget getGenericWidget() {
-				return generateWidget();
+				return generateWidget(this);
 			}
 		};
 	}
 	
-	public abstract Widget generateWidget();
+	public abstract Widget generateWidget(final GenericWrapper genericWrapper);
 
 }
