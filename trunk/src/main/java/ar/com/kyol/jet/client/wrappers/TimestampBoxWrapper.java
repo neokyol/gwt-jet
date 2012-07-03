@@ -107,6 +107,7 @@ public class TimestampBoxWrapper extends Wrapper {
 				TimestampBoxWrapper.this.timestamp.setHours(Integer.parseInt(hoursBox.getValue(hoursBox.getSelectedIndex())));
 				setProperty(TimestampBoxWrapper.this.timestamp);
 			}
+
 		});
 		
 		minutesBox.addChangeHandler(new ChangeHandler() {
@@ -116,6 +117,8 @@ public class TimestampBoxWrapper extends Wrapper {
 				TimestampBoxWrapper.this.timestamp.setMinutes(Integer.parseInt(minutesBox.getValue(minutesBox.getSelectedIndex())));
 				setProperty(TimestampBoxWrapper.this.timestamp);
 			}
+
+			
 		});
 		
 		ChangeEvent.fireNativeEvent(Document.get().createChangeEvent(), hoursBox);
@@ -146,14 +149,32 @@ public class TimestampBoxWrapper extends Wrapper {
 				wrappedDate.setYear(inputDate.getYear());
 				wrappedDate.setMonth(inputDate.getMonth());
 				wrappedDate.setDate(inputDate.getDate());
+				wrappedDate.setHours(0);
+				wrappedDate.setMinutes(0);
+				wrappedDate.setSeconds(0);
 				TimestampBoxWrapper.this.timestamp.setTime(wrappedDate.getTime());
 				setProperty(TimestampBoxWrapper.this.timestamp);
 			}
 		});
-		
+		dateBox.getTextBox().addValueChangeHandler(new ValueChangeHandler<String>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<String> arg0) {
+				if(arg0.getValue().equals("")) {
+					cleanDate();
+				}
+			}
+
+		});
 		initWidget(dateBox);
 	}
 
+	private void cleanDate() {
+		// TODO Auto-generated method stub
+		dateBox.setValue(null);
+		setProperty(null);
+	}
+	
 	@Override
 	protected String getValueAsString() {
 		return this.dateBox.getValue().toString();
