@@ -160,7 +160,7 @@ public class TimestampBoxWrapper extends Wrapper {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<String> arg0) {
-				if(arg0.getValue().equals("")) {
+				if("".equals(arg0.getValue())) {
 					cleanDate();
 				}
 			}
@@ -170,7 +170,6 @@ public class TimestampBoxWrapper extends Wrapper {
 	}
 
 	private void cleanDate() {
-		// TODO Auto-generated method stub
 		dateBox.setValue(null);
 		setProperty(null);
 	}
