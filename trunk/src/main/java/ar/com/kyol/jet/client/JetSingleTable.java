@@ -35,6 +35,7 @@ public class JetSingleTable<E extends Reflection> extends JetTable<E> {
 	public JetSingleTable() {
 		this.setCellSpacing(0);
 		this.addStyleName("JetTable");
+		this.addStyleName("JetTable-PrincipalTable");
 	}
 	
 	private void generarEncabezado(){

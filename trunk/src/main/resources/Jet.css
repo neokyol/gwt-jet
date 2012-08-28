@@ -1,5 +1,9 @@
 /** JetTable.css */
 
+.JetTable-PrincipalTable {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
 .JetTable,
 .JetTable-OddRow, .JetTable-EvenRow, .JetTable-DeletedRow,
