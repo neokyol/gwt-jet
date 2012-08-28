@@ -45,6 +45,7 @@ public class JetSplitTable<E extends Reflection> extends JetTable<E> {
 		this.setCellSpacing(0);
 		this.encabezado.addStyleName("JetTable");
 		this.contenido.addStyleName("JetTable");
+		this.addStyleName("JetTable-PrincipalTable");
 	}
 	
 	private void generarEncabezado(){
