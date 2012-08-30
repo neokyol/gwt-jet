@@ -68,7 +68,7 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 		navigationPanel = new HorizontalPanel();
 		mainPanel = new AbsolutePanel();
 		totalPanel.add(mainPanel);
-		this.jetTable = getJetTable();
+		this.jetTable = createJetTable();
 		mainPanel.add(jetTable);
 		this.qty = getPageSize();
 		refresh();
@@ -312,38 +312,12 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 	
 	protected abstract int getPageSize();
 	
-	protected abstract JetTable<E> getJetTable();
+	protected abstract JetTable<E> createJetTable();
 	
 	protected abstract void tableRefreshed();
 	
-	@Override
-	public void removeStyleName(String style) {
-		jetTable.removeStyleName(style);
+	public JetTable<E> getJetTable() {
+		return jetTable;
 	}
 	
-	@Override
-	public void removeStyleDependentName(String styleSuffix) {
-		jetTable.removeStyleDependentName(styleSuffix);
-	}
-	
-	@Override
-	public void addStyleName(String style) {
-		jetTable.addStyleName(style);
-	}
-	
-	@Override
-	public void addStyleDependentName(String styleSuffix) {
-		jetTable.addStyleDependentName(styleSuffix);
-	}
-	
-	@Override
-	public String getStyleName() {
-		return jetTable.getStyleName();
-	}
-	
-	@Override
-	public String getStylePrimaryName() {
-		return jetTable.getStylePrimaryName();
-	}
-
 }
