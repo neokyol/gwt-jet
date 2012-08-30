@@ -315,5 +315,35 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 	protected abstract JetTable<E> getJetTable();
 	
 	protected abstract void tableRefreshed();
+	
+	@Override
+	public void removeStyleName(String style) {
+		jetTable.removeStyleName(style);
+	}
+	
+	@Override
+	public void removeStyleDependentName(String styleSuffix) {
+		jetTable.removeStyleDependentName(styleSuffix);
+	}
+	
+	@Override
+	public void addStyleName(String style) {
+		jetTable.addStyleName(style);
+	}
+	
+	@Override
+	public void addStyleDependentName(String styleSuffix) {
+		jetTable.addStyleDependentName(styleSuffix);
+	}
+	
+	@Override
+	public String getStyleName() {
+		return jetTable.getStyleName();
+	}
+	
+	@Override
+	public String getStylePrimaryName() {
+		return jetTable.getStylePrimaryName();
+	}
 
 }
