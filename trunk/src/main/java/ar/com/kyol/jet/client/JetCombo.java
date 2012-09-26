@@ -201,6 +201,10 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 		addElement(e);
 		checkCreateNew();
 	}
+	
+	public boolean isEmpty() {
+		return list.isEmpty();
+	}
 
 	private void addElement(E e) {
 		list.add(e);
