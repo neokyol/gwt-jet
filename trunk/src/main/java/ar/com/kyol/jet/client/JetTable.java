@@ -141,6 +141,10 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	public abstract void setValues(Collection<E> values);
 	protected abstract int getFirstRowNumber();
 	
+	public void refresh() {
+		this.setValues(getValues());
+	}
+	
 	public void setRowVisible(int rowNumber, boolean visible) {
 		getContent().getRowFormatter().setVisible(rowNumber, false);
 	}
