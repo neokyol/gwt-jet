@@ -74,11 +74,7 @@ public class TimestampBoxWrapper extends Wrapper {
 		this.hoursBox = hoursBox;
 		this.minutesBox = minutesBox;
 		this.originalTimestamp = timestamp;
-		if(timestamp!=null){
-			this.timestamp = new Timestamp(timestamp.getTime());
-		} else {
-			this.timestamp = new Timestamp(1);
-		}
+		refreshTimestamp();
 	}
 	
 	@Override
@@ -104,6 +100,7 @@ public class TimestampBoxWrapper extends Wrapper {
 			
 			@Override
 			public void onChange(ChangeEvent arg0) {
+				refreshTimestamp();
 				TimestampBoxWrapper.this.timestamp.setHours(Integer.parseInt(hoursBox.getValue(hoursBox.getSelectedIndex())));
 				setProperty(TimestampBoxWrapper.this.timestamp);
 			}
@@ -114,6 +111,7 @@ public class TimestampBoxWrapper extends Wrapper {
 			
 			@Override
 			public void onChange(ChangeEvent arg0) {
+				refreshTimestamp();
 				TimestampBoxWrapper.this.timestamp.setMinutes(Integer.parseInt(minutesBox.getValue(minutesBox.getSelectedIndex())));
 				setProperty(TimestampBoxWrapper.this.timestamp);
 			}
@@ -144,15 +142,11 @@ public class TimestampBoxWrapper extends Wrapper {
 			
 			@Override
 			public void onValueChange(ValueChangeEvent<Date> arg0) {
+				refreshTimestamp();
 				Date inputDate = TimestampBoxWrapper.this.dateBox.getValue();
-				Date wrappedDate = new Date(TimestampBoxWrapper.this.timestamp.getTime());
-				wrappedDate.setYear(inputDate.getYear());
-				wrappedDate.setMonth(inputDate.getMonth());
-				wrappedDate.setDate(inputDate.getDate());
-				wrappedDate.setHours(0);
-				wrappedDate.setMinutes(0);
-				wrappedDate.setSeconds(0);
-				TimestampBoxWrapper.this.timestamp.setTime(wrappedDate.getTime());
+				TimestampBoxWrapper.this.timestamp.setYear(inputDate.getYear());
+				TimestampBoxWrapper.this.timestamp.setMonth(inputDate.getMonth());
+				TimestampBoxWrapper.this.timestamp.setDate(inputDate.getDate());
 				setProperty(TimestampBoxWrapper.this.timestamp);
 			}
 		});
@@ -177,6 +171,22 @@ public class TimestampBoxWrapper extends Wrapper {
 	@Override
 	protected String getValueAsString() {
 		return this.dateBox.getValue().toString();
+	}
+	
+	protected void refreshTimestamp() {
+		Timestamp timestamp = (Timestamp)this.getProperty();
+		if(timestamp!=null){
+			this.timestamp = new Timestamp(timestamp.getTime());
+		} else {
+			this.timestamp = new Timestamp(1);
+			this.timestamp.setYear(70);
+			this.timestamp.setMonth(0);
+			this.timestamp.setDate(1);
+			this.timestamp.setHours(0);
+			this.timestamp.setMinutes(0);
+			this.timestamp.setSeconds(0);
+			this.timestamp.setNanos(0);
+		}
 	}
 
 }

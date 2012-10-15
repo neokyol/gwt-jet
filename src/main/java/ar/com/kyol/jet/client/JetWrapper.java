@@ -115,6 +115,7 @@ public class JetWrapper {
 					try {
 						objSetter.setType(cType.findMethod(getter, (String[]) null).getReturnType());
 						objSetter.setSetter("s"+getter.substring(1));
+						objSetter.setGetter(getter);
 					} catch (ReflectionRequiredException r) {
 						log.log(Level.SEVERE, "UNKNOWN TYPE. TRYING TO JETWRAP A BOUNDED TYPE PARAMETER (<T extends SomeClass>)?");
 						throw r;
