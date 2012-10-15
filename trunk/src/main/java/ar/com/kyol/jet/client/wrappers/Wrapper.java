@@ -83,6 +83,15 @@ public abstract class Wrapper extends Composite {
 		}
 	}
 	
+	public Object getProperty() {
+		if(objSetter == null || objSetter.getObj()==null) {
+			return null;
+		}
+		@SuppressWarnings("rawtypes")
+		ClassType cType = TypeOracle.Instance.getClassType(objSetter.getObj().getClass());
+		return cType.invoke(objSetter.getObj(), objSetter.getGetter(), new Object[]{});
+	}
+	
 	public void initWrapper(ObjectSetter objSetter) { //TODO can't remember why this method, check and refactor it
 		this.objSetter = objSetter;
 	}

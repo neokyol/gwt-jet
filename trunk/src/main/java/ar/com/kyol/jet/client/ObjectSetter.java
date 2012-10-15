@@ -26,6 +26,7 @@ import com.gwtent.reflection.client.Type;
 public class ObjectSetter {
 	
 	private Object obj;
+	private String getter;
 	private String setter;
 	private Object value;
 	private Type type;
@@ -118,6 +119,14 @@ public class ObjectSetter {
 	 */
 	public String getFormat() {
 		return format;
+	}
+
+	public String getGetter() {
+		return getter;
+	}
+
+	public void setGetter(String getter) {
+		this.getter = getter;
 	}
 
 }
