@@ -175,7 +175,7 @@ public class TimestampBoxWrapper extends Wrapper {
 	
 	protected void refreshTimestamp() {
 		originalTimestamp = (Timestamp)this.getProperty();
-		if(timestamp!=null){
+		if(originalTimestamp!=null){
 			this.timestamp = new Timestamp(originalTimestamp.getTime());
 		} else {
 			this.timestamp = new Timestamp(1);
