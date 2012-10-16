@@ -33,18 +33,18 @@ import com.google.gwt.user.datepicker.client.DateBox;
 public class TimestampBoxWrapper extends Wrapper {
 	
 	private Timestamp timestamp;
+	private Timestamp originalTimestamp;
 	private DateBox dateBox;
 	private HoursBox hoursBox;
 	private MinutesBox minutesBox;
-	private Timestamp originalTimestamp;
 	
 	/**
 	 * Instantiates a new timestamp box wrapper.
 	 *
 	 * @param timestamp the timestamp
 	 */
-	public TimestampBoxWrapper(Timestamp timestamp) {
-		this(timestamp, new DateBox(), new HoursBox(), new MinutesBox());
+	public TimestampBoxWrapper(ObjectSetter objSetter) {
+		this(objSetter, new DateBox(), new HoursBox(), new MinutesBox());
 	}
 	
 	/**
@@ -55,8 +55,8 @@ public class TimestampBoxWrapper extends Wrapper {
 	 * @param hoursBox the hours box
 	 * @param minutesBox the minutes box
 	 */
-	public TimestampBoxWrapper(Timestamp timestamp, DateBox dateBox, HoursBox hoursBox, MinutesBox minutesBox) {
-		this(timestamp, dateBox, hoursBox, minutesBox, false);
+	public TimestampBoxWrapper(ObjectSetter objSetter, DateBox dateBox, HoursBox hoursBox, MinutesBox minutesBox) {
+		this(objSetter, dateBox, hoursBox, minutesBox, false);
 	}
 	
 	/**
@@ -68,12 +68,12 @@ public class TimestampBoxWrapper extends Wrapper {
 	 * @param minutesBox the minutes box
 	 * @param useValueAsString the use value as string
 	 */
-	public TimestampBoxWrapper(Timestamp timestamp, DateBox dateBox, HoursBox hoursBox, MinutesBox minutesBox, boolean useValueAsString) {
+	public TimestampBoxWrapper(ObjectSetter objSetter, DateBox dateBox, HoursBox hoursBox, MinutesBox minutesBox, boolean useValueAsString) {
 		super(useValueAsString);
 		this.dateBox = dateBox;
 		this.hoursBox = hoursBox;
 		this.minutesBox = minutesBox;
-		this.originalTimestamp = timestamp;
+		this.objSetter = objSetter;
 		refreshTimestamp();
 	}
 	
@@ -174,9 +174,9 @@ public class TimestampBoxWrapper extends Wrapper {
 	}
 	
 	protected void refreshTimestamp() {
-		Timestamp timestamp = (Timestamp)this.getProperty();
+		originalTimestamp = (Timestamp)this.getProperty();
 		if(timestamp!=null){
-			this.timestamp = new Timestamp(timestamp.getTime());
+			this.timestamp = new Timestamp(originalTimestamp.getTime());
 		} else {
 			this.timestamp = new Timestamp(1);
 			this.timestamp.setYear(70);
