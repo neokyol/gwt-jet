@@ -190,7 +190,7 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 		} else if (objSetter.isOfType(java.sql.Date.class)) {
 			wrapper = new SqlDateBoxWrapper((java.sql.Date) objSetter.getValue(), objSetter);
 		} else if (objSetter.isOfType(java.sql.Timestamp.class)) {
-			wrapper = new TimestampBoxWrapper((java.sql.Timestamp) objSetter.getValue());
+			wrapper = new TimestampBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Boolean.class) || objSetter.isOfType(PrimitiveTypeImpl.BOOLEAN.getQualifiedSourceName())) {
 			wrapper = new CheckBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Integer.class) || objSetter.isOfType(PrimitiveTypeImpl.INT.getQualifiedSourceName())) {

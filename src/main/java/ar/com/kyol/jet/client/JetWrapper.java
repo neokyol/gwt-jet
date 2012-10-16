@@ -166,7 +166,7 @@ public class JetWrapper {
 		} else if (objSetter.isOfType(java.sql.Date.class)) {
 			wrapper = new SqlDateBoxWrapper((java.sql.Date) objSetter.getValue(), objSetter);
 		} else if (objSetter.isOfType(java.sql.Timestamp.class)) {
-			wrapper = new TimestampBoxWrapper((java.sql.Timestamp) objSetter.getValue());
+			wrapper = new TimestampBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Boolean.class) || objSetter.isOfType("boolean")) {
 			wrapper = new CheckBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Integer.class) || objSetter.isOfType("int")) {
