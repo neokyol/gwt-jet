@@ -24,21 +24,22 @@ import ar.com.kyol.jet.client.wrappers.DateBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.DoubleBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.FloatBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.IntegerBoxWrapper;
-import ar.com.kyol.jet.client.wrappers.LongBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.SqlDateBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.TextBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.TimestampBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.Wrapper;
 import ar.com.kyol.jet.client.wrappers.WrapperGenerator;
 
-import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.ComplexPanel;
+import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.ValueBoxBase;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.gwtent.reflection.client.ClassType;
 import com.gwtent.reflection.client.NotFoundException;
 import com.gwtent.reflection.client.ReflectionRequiredException;
 import com.gwtent.reflection.client.TypeOracle;
+import com.gwtent.reflection.client.impl.PrimitiveTypeImpl;
 
 /**
  * The infamous Jet Wrapper
@@ -159,7 +160,25 @@ public class JetWrapper {
 		
 		if(wrapperGenerator != null) {
 			wrapper = wrapperGenerator.generateWrapper(objSetter);
-		} else if (objSetter.isOfType(String.class)) {
+		} else {
+			wrapper = createWrapper(objSetter);
+		}
+		
+		formatWrapper(objSetter, wrapper, readonly);
+		
+		return wrapper;
+	}
+	
+	/**
+	 * Creates a Wrapper based on the type of objSetter, binding objSetter to that wrapper.
+	 * 
+	 * @param objSetter
+	 * @return
+	 */
+	protected static Wrapper createWrapper(final ObjectSetter objSetter) {
+		Wrapper wrapper;
+		
+		if (objSetter.isOfType(String.class)) {
 			wrapper = new TextBoxWrapper(objSetter);
 		} else if (objSetter.isOfType(Date.class)) {
 			wrapper = new DateBoxWrapper((Date) objSetter.getValue(), objSetter);
@@ -167,47 +186,65 @@ public class JetWrapper {
 			wrapper = new SqlDateBoxWrapper((java.sql.Date) objSetter.getValue(), objSetter);
 		} else if (objSetter.isOfType(java.sql.Timestamp.class)) {
 			wrapper = new TimestampBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Boolean.class) || objSetter.isOfType("boolean")) {
+		} else if (objSetter.isOfType(Boolean.class) || objSetter.isOfType(PrimitiveTypeImpl.BOOLEAN.getQualifiedSourceName())) {
 			wrapper = new CheckBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Integer.class) || objSetter.isOfType("int")) {
+		} else if (objSetter.isOfType(Integer.class) || objSetter.isOfType(PrimitiveTypeImpl.INT.getQualifiedSourceName())) {
 			wrapper = new IntegerBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Float.class)  || objSetter.isOfType("float")) {
+		} else if (objSetter.isOfType(Float.class) || objSetter.isOfType(PrimitiveTypeImpl.FLOAT.getQualifiedSourceName())) {
 			wrapper = new FloatBoxWrapper(objSetter, 2, false);
-		} else if (objSetter.isOfType(Long.class)  || objSetter.isOfType("long")) {
-			wrapper = new LongBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Double.class)  || objSetter.isOfType("double")) {
+		} else if (objSetter.isOfType(Long.class) || objSetter.isOfType(PrimitiveTypeImpl.LONG.getQualifiedSourceName())) {
+			wrapper = new IntegerBoxWrapper(objSetter);
+		} else if (objSetter.isOfType(Double.class) || objSetter.isOfType(PrimitiveTypeImpl.DOUBLE.getQualifiedSourceName())) {
 			wrapper = new DoubleBoxWrapper(objSetter, 2, false);
 		} else if (objSetter.getValue() == null) {
 			wrapper = new TextBoxWrapper(objSetter);
-		} else
+		} else {
 			wrapper = new TextBoxWrapper(objSetter);
-		
-		wrapper.setColumn(0); //backward compatibility
-		wrapper.setRow(0);
-		
-		wrapper.initWrapper(objSetter);
-
-		if(wrapper.getWrappedWidget() instanceof ValueBoxBase<?>) {
-			ValueBoxBase<?> wrappedWidget = (ValueBoxBase<?>)wrapper.getWrappedWidget();
-			wrappedWidget.setReadOnly(readonly.isReadOnly(wrappedWidget));
-		}
-		
-		if(wrapper.getWrappedWidget() instanceof CheckBox) {
-			CheckBox wrappedWidget = (CheckBox)wrapper.getWrappedWidget();
-			wrappedWidget.setEnabled(!readonly.isReadOnly(wrappedWidget));
-		}
-		
-		if(wrapper.getWrappedWidget() instanceof DateBox) {
-			DateBox wrappedWidget = (DateBox)wrapper.getWrappedWidget();
-			wrappedWidget.setEnabled(!readonly.isReadOnly(wrappedWidget));
-		}
-		
-		if(wrapper.getWrappedWidget() instanceof ListBox){
-			ListBox wrappedWidget = (ListBox)wrapper.getWrappedWidget();
-			wrappedWidget.setEnabled(!readonly.isReadOnly(wrappedWidget.getValue(wrappedWidget.getSelectedIndex())));
 		}
 		
 		return wrapper;
+	}
+	
+	/**
+	 * Sets default column and row, and enable/disable according to readonly condition.
+	 * @param wrapper
+	 * @param readonly
+	 */
+	protected static void formatWrapper(ObjectSetter objSetter, Wrapper wrapper, ReadOnlyCondition readonly) {
+		formatWrapper(objSetter, wrapper, readonly, 0, 0);
+	}
+	
+	/**
+	 * Sets column, row and enable/disable according to readonly condition.
+	 * 
+	 * @param wrapper
+	 * @param readonly
+	 * @param column
+	 * @param row
+	 */
+	protected static void formatWrapper(ObjectSetter objSetter, Wrapper wrapper, ReadOnlyCondition readonly, int column, int row) {
+		wrapper.setColumn(new Integer(column));
+		wrapper.setRow(new Integer(row));
+		
+		wrapper.initWrapper(objSetter);
+
+		recursiveEnabler(wrapper.getWrappedWidget(), !readonly.isReadOnly(wrapper.getWrappedWidget()));
+	}
+	
+	private static void recursiveEnabler(Widget widget, boolean enabled) {
+		if(widget instanceof HasEnabled) {
+			((HasEnabled)widget).setEnabled(enabled);
+		} else	if(widget instanceof ComplexPanel) {
+			for (int i = 0; i < ((ComplexPanel)widget).getWidgetCount(); i++) {
+				recursiveEnabler(((ComplexPanel)widget).getWidget(i), enabled);
+			}
+		} else if(widget instanceof ValueBoxBase<?>) { //why not using HasEnabled instead?
+			ValueBoxBase<?> wrappedWidget = (ValueBoxBase<?>)widget;
+			wrappedWidget.setReadOnly(!enabled);
+		} else if(widget instanceof DateBox) { //DateBox does not implement HasEnabled in GWT 2.2
+			DateBox wrappedWidget = (DateBox)widget;
+			wrappedWidget.setEnabled(enabled);
+		}
 	}
 
 }

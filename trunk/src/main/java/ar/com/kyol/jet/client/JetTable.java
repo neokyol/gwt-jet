@@ -17,34 +17,20 @@ package ar.com.kyol.jet.client;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ar.com.kyol.jet.client.wrappers.CheckBoxWrapper;
-import ar.com.kyol.jet.client.wrappers.DateBoxWrapper;
-import ar.com.kyol.jet.client.wrappers.DoubleBoxWrapper;
-import ar.com.kyol.jet.client.wrappers.FloatBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.GenericWrapper;
-import ar.com.kyol.jet.client.wrappers.IntegerBoxWrapper;
-import ar.com.kyol.jet.client.wrappers.SqlDateBoxWrapper;
-import ar.com.kyol.jet.client.wrappers.TextBoxWrapper;
-import ar.com.kyol.jet.client.wrappers.TimestampBoxWrapper;
 import ar.com.kyol.jet.client.wrappers.Wrapper;
 import ar.com.kyol.jet.client.wrappers.WrapperGenerator;
 
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.ValueBoxBase;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.datepicker.client.DateBox;
-import com.gwtent.reflection.client.impl.PrimitiveTypeImpl;
 
 /**
  * A FlexTable that automatically wraps every field to auto-populate the values.
@@ -183,37 +169,12 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 					return (Widget) objSetter.getValue();
 				}
 			};
-		} else if (objSetter.isOfType(String.class)) {
-			wrapper = new TextBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Date.class)) {
-			wrapper = new DateBoxWrapper((Date) objSetter.getValue(), objSetter);
-		} else if (objSetter.isOfType(java.sql.Date.class)) {
-			wrapper = new SqlDateBoxWrapper((java.sql.Date) objSetter.getValue(), objSetter);
-		} else if (objSetter.isOfType(java.sql.Timestamp.class)) {
-			wrapper = new TimestampBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Boolean.class) || objSetter.isOfType(PrimitiveTypeImpl.BOOLEAN.getQualifiedSourceName())) {
-			wrapper = new CheckBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Integer.class) || objSetter.isOfType(PrimitiveTypeImpl.INT.getQualifiedSourceName())) {
-			wrapper = new IntegerBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Float.class) || objSetter.isOfType(PrimitiveTypeImpl.FLOAT.getQualifiedSourceName())) {
-			wrapper = new FloatBoxWrapper(objSetter, 2, false);
-		} else if (objSetter.isOfType(Long.class) || objSetter.isOfType(PrimitiveTypeImpl.LONG.getQualifiedSourceName())) {
-			wrapper = new IntegerBoxWrapper(objSetter);
-		} else if (objSetter.isOfType(Double.class) || objSetter.isOfType(PrimitiveTypeImpl.DOUBLE.getQualifiedSourceName())) {
-			wrapper = new DoubleBoxWrapper(objSetter, 2, false);
-		} else if (objSetter.getValue() == null) {
-			//TODO change to labelWrapper	wrapper = new LabelWrapper("");
-			wrapper = new TextBoxWrapper(objSetter);
-		} else
-			//TODO change to labelWrapper, check out primitives
-			wrapper = new TextBoxWrapper(objSetter);
-			//wrapper = new LabelWrapper(objSetter.getValue().toString());
+		} else {
+			wrapper = JetWrapper.createWrapper(objSetter);
+		}
 
-		wrapper.setColumn(new Integer(column));
-		wrapper.setRow(new Integer(row-getFirstRowNumber()));
+		JetWrapper.formatWrapper(objSetter, wrapper, jetColumn.getReadonly(), column, row-getFirstRowNumber());
 		
-		wrapper.initWrapper(objSetter);
-
 		if(jetColumn.getContentStyle() != null && !jetColumn.getContentStyle().equals("")) {
 			wrapper.addStyleName(jetColumn.getContentStyle());
 		}
@@ -222,27 +183,10 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 			wrapper.setWidth(jetColumn.getColumnWidth());
 		}
 		
-		if(wrapper.getWrappedWidget() instanceof ValueBoxBase<?>) {
-			ValueBoxBase<?> wrappedWidget = (ValueBoxBase<?>)wrapper.getWrappedWidget();
-			wrappedWidget.setReadOnly(jetColumn.isReadOnly(wrappedWidget));
-		}
-		
-		if(wrapper.getWrappedWidget() instanceof CheckBox) {
-			CheckBox wrappedWidget = (CheckBox)wrapper.getWrappedWidget();
-			wrappedWidget.setEnabled(!jetColumn.isReadOnly(wrappedWidget));
-		}
-		
-		if(wrapper.getWrappedWidget() instanceof DateBox) {
-			DateBox wrappedWidget = (DateBox)wrapper.getWrappedWidget();
-			wrappedWidget.setEnabled(!jetColumn.isReadOnly(wrappedWidget));
-		}
-		
-		if(wrapper.getWrappedWidget() instanceof ListBox){
-			ListBox wrappedWidget = (ListBox)wrapper.getWrappedWidget();
-			wrappedWidget.setEnabled(!jetColumn.isReadOnly(wrappedWidget));
-		}
 		return wrapper;
 	}
+	
+	
 	
 	public List<E> getValues() {
 		return this.values;
