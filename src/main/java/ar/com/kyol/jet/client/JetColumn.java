@@ -19,13 +19,8 @@ import ar.com.kyol.jet.client.wrappers.Wrapper;
 import ar.com.kyol.jet.client.wrappers.WrapperGenerator;
 
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.ValueBoxBase;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.datepicker.client.DateBox;
-import ar.com.kyol.jet.client.Reflection;
 
 public class JetColumn<E extends Reflection> {
 	
@@ -288,69 +283,17 @@ public class JetColumn<E extends Reflection> {
 	public ReadOnlyCondition getReadonly() {
 		return readonly;
 	}
+
+	/**
+	 * Checks if it's read only.
+	 *
+	 * @param obj the obj
+	 * @return true, if it's read only
+	 */
+	public boolean isReadOnly(Widget obj) {
+		return readonly.isReadOnly(obj);
+	}
 	
-	/**
-	 * Checks if it's read only.
-	 *
-	 * @param obj the obj
-	 * @return true, if it's read only
-	 */
-	public boolean isReadOnly(ValueBoxBase<?> obj){
-		Object value = obj.getValue();
-		boolean isReadOnly = isReadOnly(value);
-		
-		return isReadOnly;
-	}
-
-	/**
-	 * Checks if it's read only.
-	 *
-	 * @param obj the obj
-	 * @return true, if it's read only
-	 */
-	public boolean isReadOnly(ListBox obj){
-		Object value = obj.getValue(obj.getSelectedIndex());
-		boolean isReadOnly = isReadOnly(value);
-		
-		return isReadOnly;
-	}
-
-	/**
-	 * Checks if it's read only.
-	 *
-	 * @param obj the obj
-	 * @return true, if it's read only
-	 */
-	public boolean isReadOnly(CheckBox obj){
-		Object value = obj.getValue();
-		boolean isReadOnly = isReadOnly(value);
-
-		return isReadOnly;
-	}
-
-	/**
-	 * Checks if it's read only.
-	 *
-	 * @param obj the obj
-	 * @return true, if it's read only
-	 */
-	public boolean isReadOnly(DateBox obj){
-		Object value = obj.getValue();
-		boolean isReadOnly = isReadOnly(value);
-		
-		return isReadOnly;
-	}
-
-	/**
-	 * Checks if it's readonly.
-	 *
-	 * @param value the value
-	 * @return true, if it's read only
-	 */
-	private boolean isReadOnly(Object value) {
-		return readonly.isReadOnly(value);
-	}
-
 	/**
 	 * Sets the click handler.
 	 *

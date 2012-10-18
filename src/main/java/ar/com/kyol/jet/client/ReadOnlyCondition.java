@@ -15,6 +15,12 @@
  */
 package ar.com.kyol.jet.client;
 
+import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.ValueBoxBase;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
+
 public enum ReadOnlyCondition {
 	
 ALWAYS, NEVER, WHEN_EMPTY, WHEN_NOT_EMPTY;
@@ -45,5 +51,22 @@ ALWAYS, NEVER, WHEN_EMPTY, WHEN_NOT_EMPTY;
 			}
 		}
 		return isReadOnly;
+	}
+	
+	public boolean isReadOnly(Widget widget) {
+		Object value = widget;
+		
+		if(widget instanceof ValueBoxBase<?>) {
+			value = ((ValueBoxBase<?>)widget).getValue();
+		} else if(widget instanceof ListBox) {
+			ListBox listBox = (ListBox)widget;
+			value = listBox.getValue(listBox.getSelectedIndex());
+		} else if(widget instanceof CheckBox) {
+			value = ((CheckBox)widget).getValue();
+		} else if(widget instanceof DateBox) {
+			value = ((DateBox)widget).getValue();
+		}
+			
+		return isReadOnly(value);
 	}
 }
