@@ -35,6 +35,15 @@ public class JetViewSplitTable<E extends Reflection> extends JetSplitTable<E> {
 		return new JetViewTableHelper().createWrapperWidget(objSetter, jetColumn, column, row);
 	}
 	
+
+	/**
+	 * Adds a click handler to the cell widget. Adds also a style named <i>contentStyle</i>-clickHandler every time <i>contentStyle</i> is not null nor empty. 
+	 * @param columnName
+	 * @param title
+	 * @param contentStyle
+	 * @param columnWidth
+	 * @param clickHandler
+	 */
 	public void addColumnWithHandler(String columnName, String title, String contentStyle,
 			Integer columnWidth, ClickHandler clickHandler) {
 		JetColumn<E> jetCol = new JetColumn<E>(columnName, title, contentStyle, null, columnWidth, ReadOnlyCondition.ALWAYS);
