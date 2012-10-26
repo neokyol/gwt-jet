@@ -15,6 +15,7 @@
  */
 package ar.com.kyol.jet.client;
 
+import ar.com.kyol.jet.client.handlers.JetClickHandlerGenerator;
 import ar.com.kyol.jet.client.wrappers.Wrapper;
 import ar.com.kyol.jet.client.wrappers.WrapperGenerator;
 
@@ -32,6 +33,7 @@ public class JetColumn<E extends Reflection> {
 	private Integer columnWidth;
 	private ReadOnlyCondition readonly;
 	private ClickHandler clickHandler;
+	private JetClickHandlerGenerator jetClickHandlerGenerator;
 	
 	/**
 	 * Instantiates a new jet column.
@@ -310,5 +312,13 @@ public class JetColumn<E extends Reflection> {
 	 */
 	public ClickHandler getClickHandler() {
 		return clickHandler;
+	}
+
+	public JetClickHandlerGenerator getJetClickHandlerGenerator() {
+		return jetClickHandlerGenerator;
+	}
+
+	public void setJetClickHandlerGenerator(JetClickHandlerGenerator jetClickHandlerGenerator) {
+		this.jetClickHandlerGenerator = jetClickHandlerGenerator;
 	}
 }
