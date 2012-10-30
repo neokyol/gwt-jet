@@ -35,7 +35,7 @@ import com.google.gwt.user.client.ui.Image;
  * @author klarsk
  *
  */
-public abstract class JetCheckBoxEdit extends Composite implements HasEnabled, HasValueChangeHandlers<Boolean> {
+public abstract class JetCheckBoxEdit extends Composite implements HasEnabled, HasValueChangeHandlers<Boolean>, ReadOnlyCondition.HasValueForReadOnlyCondition {
 
 	private HorizontalPanel checkEditPanel = new HorizontalPanel();
 	private HorizontalPanel editImagePanel = new HorizontalPanel();
@@ -44,6 +44,7 @@ public abstract class JetCheckBoxEdit extends Composite implements HasEnabled, H
 	//private ImageResource imgSrc;
 	private OkCancelPopup popup;
 	private boolean calledByEdit = false;
+	private Boolean value = null;
 	
 	public JetCheckBoxEdit() {
 		//edit button
@@ -73,9 +74,11 @@ public abstract class JetCheckBoxEdit extends Composite implements HasEnabled, H
 				if(event.getValue()) {
 					editImagePanel.setVisible(true);
 					openPopup(false);
+					value = false;
 				}else{
 					editImagePanel.setVisible(false);
 					getCurrentPopUp().clean();
+					value = true;
 				}
 			}
 
@@ -127,6 +130,7 @@ public abstract class JetCheckBoxEdit extends Composite implements HasEnabled, H
 		checkBox.setValue(false);
 		editImagePanel.setVisible(false);
 		getCurrentPopUp().clean();
+		this.value = null;
 	}
 	
 	public HandlerRegistration addValueChangeHandler(ValueChangeHandler<Boolean> handler) {
@@ -139,12 +143,18 @@ public abstract class JetCheckBoxEdit extends Composite implements HasEnabled, H
 	
 	public void setCheckBoxValue(Boolean value) {
 		checkBox.setValue(value);
-		editImagePanel.setVisible(value);
+		editImagePanel.setVisible(value==null?false:value);
+		this.value = value;  
 	}
 	
 	@Override
 	public void fireEvent(GwtEvent<?> event) {
 		checkBox.fireEvent(event);
+	}
+	
+	@Override
+	public Object getValueForReadOnlyCondition() {
+		return value;
 	}
 	
 }

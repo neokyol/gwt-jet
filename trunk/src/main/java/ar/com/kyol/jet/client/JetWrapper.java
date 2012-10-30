@@ -228,22 +228,22 @@ public class JetWrapper {
 		
 		wrapper.initWrapper(objSetter);
 
-		recursiveEnabler(wrapper.getWrappedWidget(), !readonly.isReadOnly(wrapper.getWrappedWidget()));
+		recursiveEnabler(wrapper.getWrappedWidget(), readonly);
 	}
 	
-	private static void recursiveEnabler(Widget widget, boolean enabled) {
+	private static void recursiveEnabler(Widget widget, ReadOnlyCondition readonly) {
 		if(widget instanceof HasEnabled) {
-			((HasEnabled)widget).setEnabled(enabled);
-		} else	if(widget instanceof ComplexPanel) {
+			((HasEnabled)widget).setEnabled(!readonly.isReadOnly(widget));
+		} else if(widget instanceof ComplexPanel) {
 			for (int i = 0; i < ((ComplexPanel)widget).getWidgetCount(); i++) {
-				recursiveEnabler(((ComplexPanel)widget).getWidget(i), enabled);
+				recursiveEnabler(((ComplexPanel)widget).getWidget(i), readonly);
 			}
 		} else if(widget instanceof ValueBoxBase<?>) { //why not using HasEnabled instead?
 			ValueBoxBase<?> wrappedWidget = (ValueBoxBase<?>)widget;
-			wrappedWidget.setReadOnly(!enabled);
+			wrappedWidget.setReadOnly(readonly.isReadOnly(widget));
 		} else if(widget instanceof DateBox) { //DateBox does not implement HasEnabled in GWT 2.2
 			DateBox wrappedWidget = (DateBox)widget;
-			wrappedWidget.setEnabled(enabled);
+			wrappedWidget.setEnabled(!readonly.isReadOnly(widget));
 		}
 	}
 
