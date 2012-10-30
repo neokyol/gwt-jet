@@ -56,17 +56,37 @@ ALWAYS, NEVER, WHEN_EMPTY, WHEN_NOT_EMPTY;
 	public boolean isReadOnly(Widget widget) {
 		Object value = widget;
 		
-		if(widget instanceof ValueBoxBase<?>) {
-			value = ((ValueBoxBase<?>)widget).getValue();
-		} else if(widget instanceof ListBox) {
-			ListBox listBox = (ListBox)widget;
+		if(widget instanceof ReadOnlyCondition.HasValueForReadOnlyCondition) {
+			value = ((ReadOnlyCondition.HasValueForReadOnlyCondition)widget).getValueForReadOnlyCondition();
+		}
+		
+		if(value instanceof ValueBoxBase<?>) {
+			value = ((ValueBoxBase<?>)value).getValue();
+		} else if(value instanceof ListBox) {
+			ListBox listBox = (ListBox)value;
 			value = listBox.getValue(listBox.getSelectedIndex());
-		} else if(widget instanceof CheckBox) {
-			value = ((CheckBox)widget).getValue();
-		} else if(widget instanceof DateBox) {
-			value = ((DateBox)widget).getValue();
+		} else if(value instanceof CheckBox) {
+			value = ((CheckBox)value).getValue();
+		} else if(value instanceof DateBox) {
+			value = ((DateBox)value).getValue();
 		}
 			
 		return isReadOnly(value);
+	}
+	
+	/**
+	 * Implement this interface if you want your widget to expose a certain value to affect ReadOnlyCondition in a JetTable
+	 * 
+	 * @author fpugnali
+	 * @author smuzzopappa
+	 *
+	 */
+	public interface HasValueForReadOnlyCondition {
+		/**
+		 * value to affect ReadOnlyCondition
+		 * 
+		 * @return null or Object representing value
+		 */
+		public Object getValueForReadOnlyCondition();
 	}
 }
