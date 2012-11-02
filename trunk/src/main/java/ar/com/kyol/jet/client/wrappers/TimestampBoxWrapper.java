@@ -20,7 +20,6 @@ import java.util.Date;
 
 import ar.com.kyol.jet.client.ObjectSetter;
 
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -119,8 +118,8 @@ public class TimestampBoxWrapper extends Wrapper {
 			
 		});
 		
-		ChangeEvent.fireNativeEvent(Document.get().createChangeEvent(), hoursBox);
-		ChangeEvent.fireNativeEvent(Document.get().createChangeEvent(), minutesBox);
+		//ChangeEvent.fireNativeEvent(Document.get().createChangeEvent(), hoursBox);
+		//ChangeEvent.fireNativeEvent(Document.get().createChangeEvent(), minutesBox);
 		
 		HorizontalPanel panel = new HorizontalPanel();
 		panel.add(hoursBox);
