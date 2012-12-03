@@ -68,7 +68,7 @@ public class JetViewTableHelper {
 		} else if (objSetter.isOfType(java.sql.Date.class)) {
 			wrapper = new HTMLWrapper(objSetter, html);
 		} else if (objSetter.isOfType(Boolean.class) || objSetter.isOfType(PrimitiveTypeImpl.BOOLEAN.getQualifiedSourceName())) {
-			String value = Jet.constants.n();
+			String value = Jet.constants.n(); //TODO when null the default must be blank, not .n()
 			if(objSetter.getValue() != null && (Boolean)objSetter.getValue())
 				value = Jet.constants.y();
 			objSetter.setValue(value);
