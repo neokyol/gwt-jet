@@ -106,3 +106,7 @@ option {
 	display: none;
 	visibility: hidden;
 }
+.Jet-ImageDisable {
+	/* filter: alpha(opacity=30); */
+    opacity: .30;
+}
