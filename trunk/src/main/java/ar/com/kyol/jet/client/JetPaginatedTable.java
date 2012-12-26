@@ -46,7 +46,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @param <E>
  */
-public abstract class JetPaginatedTable<E extends Reflection> extends Composite {
+public abstract class JetPaginatedTable<E extends Reflection> extends Composite implements IsJetTable<E> {
 	
 	protected JetTable<E> jetTable;
 	protected boolean useHyperlinks;
@@ -318,6 +318,11 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 	
 	public JetTable<E> getJetTable() {
 		return jetTable;
+	}
+	
+	@Override
+	public JetTable<E> asJetTable() {
+		return this.jetTable;
 	}
 	
 }

@@ -39,8 +39,8 @@ public class JetSingleTable<E extends Reflection> extends JetTable<E> {
 	}
 	
 	private void generarEncabezado(){
-		this.insertRow(HeaderRowIndex);
-		this.getRowFormatter().addStyleName(HeaderRowIndex, "JetTable-Header");
+		this.insertRow(HEADER_ROW_INDEX);
+		this.getRowFormatter().addStyleName(HEADER_ROW_INDEX, "JetTable-Header");
 		addColumns();
 	}
 
