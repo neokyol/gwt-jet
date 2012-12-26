@@ -49,10 +49,10 @@ public class JetSplitTable<E extends Reflection> extends JetTable<E> {
 	}
 	
 	private void generarEncabezado(){
-		this.encabezado.insertRow(HeaderRowIndex);
-		this.encabezado.getRowFormatter().addStyleName(HeaderRowIndex, "JetTable-Header");
+		this.encabezado.insertRow(HEADER_ROW_INDEX);
+		this.encabezado.getRowFormatter().addStyleName(HEADER_ROW_INDEX, "JetTable-Header");
 		addColumns();
-		this.insertRow(HeaderRowIndex);
+		this.insertRow(HEADER_ROW_INDEX);
 		this.setWidget(0, 0, encabezado);
 	}
 

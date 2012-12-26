@@ -39,9 +39,9 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @param <E>
  */
-public abstract class JetTable<E extends Reflection> extends FlexTable {
+public abstract class JetTable<E extends Reflection> extends FlexTable implements IsJetTable<E> {
 	
-	protected static final int HeaderRowIndex = 0;
+	protected static final int HEADER_ROW_INDEX = 0;
 	
 	private static final Logger log = Logger.getLogger(""); //root logger
 	
@@ -200,14 +200,14 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 	
 	protected void addColumn(Object columnHeading) {
 		Widget widget = createCellWidget(columnHeading);
-		int cell = this.getHeader().getCellCount(HeaderRowIndex);
+		int cell = this.getHeader().getCellCount(HEADER_ROW_INDEX);
 
 		widget.setWidth("100%");
 		widget.addStyleName("JetTable-ColumnLabel");
 
-		this.getHeader().setWidget(HeaderRowIndex, cell, widget);
+		this.getHeader().setWidget(HEADER_ROW_INDEX, cell, widget);
 
-		this.getHeader().getCellFormatter().addStyleName(HeaderRowIndex, cell,
+		this.getHeader().getCellFormatter().addStyleName(HEADER_ROW_INDEX, cell,
 				"JetTable-ColumnLabelCell");
 	}
 	
@@ -303,5 +303,10 @@ public abstract class JetTable<E extends Reflection> extends FlexTable {
 				((HasEnabled)widget).setEnabled(enabled);
 			}
 		}
+	}
+	
+	@Override
+	public JetTable<E> asJetTable() {
+		return this;
 	}
 }
