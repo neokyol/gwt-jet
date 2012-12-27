@@ -61,7 +61,7 @@ public class DateBoxWrapper extends Wrapper {
 	 * @param dateBox the date box
 	 * @param useValueAsString the use value as string
 	 */
-	public DateBoxWrapper(Date date, ObjectSetter objSetter, DateBox dateBox, boolean useValueAsString) {
+	public DateBoxWrapper(Date date, ObjectSetter objSetter, final DateBox dateBox, boolean useValueAsString) {
 		super(useValueAsString);
 		this.dateBox = dateBox;
 		this.date = date;
@@ -76,17 +76,33 @@ public class DateBoxWrapper extends Wrapper {
 		dateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
 			
 			@Override
+			@SuppressWarnings("rawtypes")
 			public void onValueChange(ValueChangeEvent<Date> arg0) {
 				if(DateBoxWrapper.this.date == null) {
-					@SuppressWarnings("rawtypes")
 					ClassType cType = TypeOracle.Instance.getClassType(DateBoxWrapper.this.objSetter.getObj().getClass());
 					DateBoxWrapper.this.date = new Date();
 					cType.invoke(DateBoxWrapper.this.objSetter.getObj(), DateBoxWrapper.this.objSetter.getSetter(), new Object[]{DateBoxWrapper.this.date});
 				}
-				DateBoxWrapper.this.date.setTime(DateBoxWrapper.this.dateBox.getValue().getTime());
+
+				if(DateBoxWrapper.this.dateBox.getValue() != null) {
+					DateBoxWrapper.this.date.setTime(DateBoxWrapper.this.dateBox.getValue().getTime());
+				} else {
+					DateBoxWrapper.this.date = null;
+					ClassType cType = TypeOracle.Instance.getClassType(DateBoxWrapper.this.objSetter.getObj().getClass());
+					cType.invoke(DateBoxWrapper.this.objSetter.getObj(), DateBoxWrapper.this.objSetter.getSetter(), new Object[]{DateBoxWrapper.this.date});
+				}
 			}
 		});
 		
+		//gwt issue 4084 (Fixed in version 2.5)
+		dateBox.getTextBox().addValueChangeHandler(new ValueChangeHandler<String>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				if("".equals(event.getValue()) || null == event.getValue()) {
+					ValueChangeEvent.fire(dateBox, null);
+				}
+			}
+		});
 		initWidget(dateBox);
 	}
 
