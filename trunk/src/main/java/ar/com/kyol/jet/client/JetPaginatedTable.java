@@ -41,6 +41,8 @@ import com.google.gwt.user.client.ui.Widget;
  * If useHyperlinks is enabled, the navigation occurs with /p(+pageNumber) hyperlinks, and
  * it's up to the web application to manage the new history tokens calling this class refresh() method.
  * 
+ * If lazyInit is enabled, the table won't retrieve the first page when instanced.
+ * 
  * @author fpugnali
  * @author smuzzopappa
  *
@@ -58,12 +60,19 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 	protected AbsolutePanel mainPanel;
 	protected Panel navigationPanel;
 	
+	private boolean lazyInit;
+	
 	public JetPaginatedTable() {
 		this(true);
 	}
 	
 	public JetPaginatedTable(boolean useHyperlinks) {
+		this(useHyperlinks, false);
+	}
+	
+	public JetPaginatedTable(boolean useHyperlinks, boolean lazyInit) {
 		this.useHyperlinks = useHyperlinks;
+		this.lazyInit = lazyInit;
 		Panel totalPanel = new VerticalPanel();
 		navigationPanel = new HorizontalPanel();
 		mainPanel = new AbsolutePanel();
@@ -241,6 +250,10 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 	}
 	
 	public void refresh() {
+		if(lazyInit) {
+			lazyInit = false;
+			return;
+		}
 		if(!useHyperlinks) {
 			AbsolutePanel panel = new AbsolutePanel();
 			panel.getElement().getStyle().setOpacity(0.3d);
