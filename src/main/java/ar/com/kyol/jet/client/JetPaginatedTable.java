@@ -294,6 +294,10 @@ public abstract class JetPaginatedTable<E extends Reflection> extends Composite 
 		});
 	}
 	
+	public void jumpToPage(int pageNumber) {
+		page = pageNumber;
+	}
+	
 	private void callbackRefresh(List<E> values) {
 		
 		int retSize;
