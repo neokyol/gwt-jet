@@ -49,7 +49,7 @@ public class NumericBox extends TextBox {
 					return;
 				}
 				
-				if((event.getNativeKeyCode() >= 96 && event.getNativeKeyCode() <= 106)) { //numeric pad!
+				if((event.getNativeKeyCode() >= 96 && event.getNativeKeyCode() <= 105)) { //numeric pad!
 					return;
 				}
 				
