@@ -53,7 +53,11 @@ public class JetWrapper {
 	 * Creates a Wrapper for the provided object's property, automatically updating it when the associated Widget changes.
 	 * 
 	 * @param obj - the object containing the property to be wrapped
-	 * @param property - the property to be wrapped (you could specify multiple levels separating properties with a dot
+	 * @param property - the property to be wrapped (you could specify multiple levels separating properties with a dot. 
+	 * You can add a format using the $ sign separator after the property name.
+	 * For Integer/Long fields, use <i>-</i> to allow the minus sign in the text box.
+	 * For Date fields, put the date format patter if you don't want the default format.
+	 * For Float/Double fields, the all the possibles number formats are allowed.
 	 * @param readonly - the readonly condition
 	 * @return
 	 */

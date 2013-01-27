@@ -41,7 +41,7 @@ public class IntegerBoxWrapper extends Wrapper {
 	 * @param useValueAsString the use value as string
 	 */
 	public IntegerBoxWrapper(ObjectSetter objSetter, boolean useValueAsString) {
-		this(objSetter, new NumericBox(), useValueAsString);
+		this(objSetter, new NumericBox("-".equals(objSetter.getFormat())), useValueAsString);
 	}
 	
 	/**
