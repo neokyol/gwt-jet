@@ -28,6 +28,14 @@ public class NumericBox extends TextBox {
 	 * Instantiates a new numeric box.
 	 */
 	public NumericBox() {
+		this(false);
+	}
+	
+	/**
+	 * Instantiates a new numeric box.
+	 * <i>allowNegative</i> allows the minus sign.
+	 */
+	public NumericBox(final boolean allowNegative) {
 		sinkEvents(Event.ONPASTE);
 		//addKeyPressHandler(new KeyPressHandler() {
 		addKeyDownHandler(new KeyDownHandler() {
@@ -49,6 +57,14 @@ public class NumericBox extends TextBox {
 					return;
 				}
 				
+				if(event.getNativeKeyCode() == 109 || event.getNativeKeyCode() == 189) {  //minus sign or dash
+					if((getCursorPos() != 0) || getValue().contains("-") || !allowNegative) {
+						((TextBoxBase)event.getSource()).cancelKey();
+					} else {
+						return;
+					}
+				}
+
 				if((event.getNativeKeyCode() >= 96 && event.getNativeKeyCode() <= 105)) { //numeric pad!
 					return;
 				}
