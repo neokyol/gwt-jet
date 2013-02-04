@@ -25,6 +25,7 @@ import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.ListBox;
 import com.gwtent.reflection.client.ClassType;
@@ -37,7 +38,7 @@ import com.gwtent.reflection.client.TypeOracle;
  *
  * @param <E>
  */
-public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandlers {
+public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandlers, Focusable {
 	
 	private List<E> list = new ArrayList<E>();
 	private ListBox listBox = new ListBox();
@@ -330,6 +331,22 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 	
 	public void clean() {
 		this.set(new ArrayList<E>());
+	}
+	
+	public void setFocus(boolean focused) {
+		this.listBox.setFocus(focused);
+	}
+	@Override
+	public int getTabIndex() {
+		return this.listBox.getTabIndex();
+	}
+	@Override
+	public void setAccessKey(char key) {
+		this.listBox.setAccessKey(key);
+	}
+	@Override
+	public void setTabIndex(int index) {
+		this.listBox.setTabIndex(index);
 	}
 
 }
