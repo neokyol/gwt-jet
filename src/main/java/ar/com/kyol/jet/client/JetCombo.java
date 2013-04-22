@@ -41,10 +41,8 @@ import com.gwtent.reflection.client.TypeOracle;
 public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandlers, Focusable {
 	
 	private List<E> list = new ArrayList<E>();
-	private ListBox listBox = new ListBox();
+	private ListBox listBox;
 	private String getter;
-	@SuppressWarnings("rawtypes")
-	private ClassType cType;
 	private CreateNewHandler createNewHandler = null;
 	private boolean cargando = false;
 	private boolean isCreateNew = false;
@@ -58,10 +56,12 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 	
 	/**
 	 * A disabled JetCombo with a "Cargando" unique item. It will be enabled again when add or addAll is called.
-	 * @param 
+	 * @param hasSelectedItem - if true, adds "Seleccione..." as first item.
 	 * @param descriptor - the property to display in the combo box
+	 * @param isMultipleSelect - if true, makes the combo as multiple select.
 	 */
-	public JetCombo(String descriptor, boolean hasSelectedItem) {
+	public JetCombo(String descriptor, boolean hasSelectedItem, boolean isMultipleSelect) {
+		listBox = new ListBox(isMultipleSelect);
 		this.hasSeleccioneItem=hasSelectedItem;
 		this.cargando = true;
 		initGetter(descriptor);
@@ -72,18 +72,20 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 		
 		initWidget(listBox);
 	}
+	/**
+	 * A disabled JetCombo with a "Cargando" unique item. It will be enabled again when add or addAll is called.
+	 * @param hasSelectedItem - if true, adds "Seleccione..." as first item.
+	 * @param descriptor - the property to display in the combo box.
+	 * Generated combo will not be multiple select.
+	 */
+	public JetCombo(String descriptor, boolean hasSelectedItem) {
+		this(descriptor, hasSelectedItem, false);
+	}
+	
 	public JetCombo(String descriptor) {
 		this(descriptor,true);
 	}
-	
-	public int getItemCount(){
-		return listBox.getItemCount();
-	}
-	
-	public E getValue(int position){
-		return list.get(position);
-	}
-	
+
 	/**
 	 * A JetCombo with a "Seleccione" first item and a list of objects to choose from.
 	 * 
@@ -91,6 +93,7 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 	 * @param descriptor - the property to display in the combo box
 	 */
 	public JetCombo(List<E> list, String descriptor, boolean hasSeleccioneItem) {
+		listBox = new ListBox();
 		this.list.addAll(list);
 		this.hasSeleccioneItem = hasSeleccioneItem;
 		if(hasSeleccioneItem){
@@ -98,12 +101,8 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 		}
 		initGetter(descriptor);
 		if(list != null && !list.isEmpty()) {
-			saveType(list.get(0));
-			int i = 0;
 			for (E e : list) {
-				String description = (String)cType.invoke(e, getter, (Object[]) null);
-				listBox.addItem(description, Integer.toString(i));
-				i++;
+				addElementToListBox(e);
 			} 
 		}
 		
@@ -115,16 +114,28 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 	public JetCombo(List<E> list, String descriptor) {
 		this(list,descriptor,true);
 	}
-
-	private void saveType(Object obj) {
-		cType = TypeOracle.Instance.getClassType(obj.getClass()); //use first one to extract the class
+	public int getItemCount(){
+		return listBox.getItemCount();
 	}
-
+	
+	public E getValue(int position){
+		return list.get(position);
+	}
+	
 	private void initGetter(String descriptor) {
 		if(descriptor == null || descriptor.equals("") || descriptor.equals("toString")) { //very ugly solution for not being able to access E class, this way we allow List<String> to be Jetcomboed (or anything toStringable)
 			getter = "toString";
 		} else {
-			getter = "get"+descriptor.substring(0, 1).toUpperCase() + descriptor.substring(1, descriptor.length()); //TODO support depth with dot char
+			String[] splittedByDot = descriptor.split("\\.");
+			for (int i = 0; i < splittedByDot.length; i++) {
+				if(i>0) {
+					getter += ".";
+				} else {
+					getter = "";
+				}
+				String attribute = splittedByDot[i];
+				getter += "get" + attribute.substring(0, 1).toUpperCase() + attribute.substring(1, attribute.length());
+			}
 		}
 	}
 	
@@ -216,11 +227,20 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void addElementToListBox(E e) {
-		if(cType == null) {
-			saveType(e);
+		String[] getters = getter.split("\\.");
+		String description = null;
+		Object o = e;
+		for (int i = 0; i < getters.length; i++) {
+			ClassType cType2 = TypeOracle.Instance.getClassType(o.getClass());
+			String getterTemp = getters[i];
+			if(i == getters.length-1) {
+				description = (String)cType2.invoke(o, getterTemp, (Object[]) null);
+			} else {
+				o = cType2.invoke(o, getterTemp, (Object[]) null);
+			}
 		}
-		String description = (String)cType.invoke(e, getter, (Object[]) null);
 		int i = listBox.getItemCount();
 		if(hasSeleccioneItem) {
 			i--;
