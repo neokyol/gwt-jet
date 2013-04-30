@@ -29,6 +29,7 @@ import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.ListBox;
 import com.gwtent.reflection.client.ClassType;
+import com.gwtent.reflection.client.NotFoundException;
 import com.gwtent.reflection.client.TypeOracle;
 
 /**
@@ -236,7 +237,14 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 			ClassType cType2 = TypeOracle.Instance.getClassType(o.getClass());
 			String getterTemp = getters[i];
 			if(i == getters.length-1) {
-				description = (String)cType2.invoke(o, getterTemp, (Object[]) null);
+				try {
+					description = (String)cType2.invoke(o, getterTemp, (Object[]) null);
+				} catch(NotFoundException notFound) {
+					//probar si se trata de un método que no es "get"
+					String att = getterTemp.substring(3);
+					att = att.substring(0, 1).toLowerCase() + att.substring(1);
+					description = (String)cType2.invoke(o, att, (Object[]) null);
+				}
 			} else {
 				o = cType2.invoke(o, getterTemp, (Object[]) null);
 			}
