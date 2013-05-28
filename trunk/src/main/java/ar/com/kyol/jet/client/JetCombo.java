@@ -165,11 +165,16 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 	 */
 	public E getSelectedItem() {
 		String value = listBox.getValue(listBox.getSelectedIndex());
+		
 		E e = null;
 		if(!value.equals("") && !value.equals(CREATE_NEW)) {
 			e = list.get(Integer.parseInt(value));
 		}
 		return e;
+	}
+	
+	public boolean isSelectedItem(int index) {
+		return listBox.isItemSelected(index);
 	}
 	
 	public void setSelectedIndex(int index) {
@@ -262,6 +267,11 @@ public class JetCombo<E> extends Composite implements HasEnabled, HasChangeHandl
 			addElementToListBox(e);
 		}
 		checkCreateNew();
+	}
+		
+	public void remove(E e) {
+		list.remove(e);
+		reconstructList();
 	}
 	
 	public void add(int index, E e) {

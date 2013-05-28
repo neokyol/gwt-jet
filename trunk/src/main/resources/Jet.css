@@ -110,3 +110,12 @@ option {
 	/* filter: alpha(opacity=30); */
     opacity: .30;
 }
+
+.doubleListBox select {
+	margin-top: 15px;	
+	margin-bottom: 15px;	
+}
+
+.doubleListBox button {
+	margin: 20px;
+}
