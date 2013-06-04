@@ -113,6 +113,7 @@ public class JetDoubleListBox<E> extends Composite implements HasEnabled {
 
 	public void setInitialList(List<E> initialList) {
 		leftList.set(initialList);
+		rightList.set(new ArrayList<E>());
 	}
 
 	@Override
