@@ -93,7 +93,11 @@ public class NumericBox extends TextBox {
 	}
 	
 	public Integer getNumber() {
-		return Integer.parseInt(this.getText());
+		if(this.getText() != null && !this.getText().equals("")) {
+			return Integer.parseInt(this.getText());
+		} else {
+			return 0;
+		}
 	}
 
 }
