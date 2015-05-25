@@ -28,14 +28,15 @@ jetTable.setValues(myBeanCollection);
 
 And you end up having something like this!
 
+![alt text](https://github.com/neokyol/gwt-jet/blob/wiki/basicjettable.png "Image example 1")
 
 
 When the user modifies any value, the corresponding values in your beans will be modified as well. Remember this occurs client side. If you obtained your myBeanCollection from the server, you could easily resend it back after the user confirms the changes.
 
 #But is this flexible?
-Very flexible. Wrappers for most common java types are automatically used (like the ones in the example), but you can create your owns or even redefine inline any to react as you want. The same with the read-only conditions. And JetTable is a FlexTable so you can format it as usual. The key here is: make it fast, or make it as complex as you like.
+Very flexible. Wrappers for most common java types are automatically used (like the ones in the example), but you can create your owns or even redefine inline any to react as you want. The same with the read-only conditions. And [JetTable](https://github.com/neokyol/gwt-jet/blob/master/javadoc/ar/com/kyol/jet/client/JetTable.html) is a FlexTable so you can format it as usual. The key here is: make it fast, or make it as complex as you like.
 
-Check more answers in the FAQ and more examples in the Showcase project
+Check more answers in the [FAQ](https://github.com/neokyol/gwt-jet/blob/wiki/FAQ.md) and more examples in the [Showcase](https://github.com/neokyol/gwt-jet/blob/wiki/Showcase.md) project
 
 Credits
 Most magic behind gwt-jet is provided by James Luo's wonderful project GWT ENT. The original source is included, but check its site if you want to use reflection some other way in your gwt project.
