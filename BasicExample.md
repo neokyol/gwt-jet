@@ -1,0 +1,34 @@
+# Almost a hello world example #
+
+Having a basic bean...
+```
+public class MyBean implements Reflection, Serializable {
+	
+    private Date someDay;
+    private String someText;
+    private Integer someInt;
+    private boolean someBoolean; (...)
+```
+
+...create a basic JetTable like this
+
+```
+JetTable<MyBean> jetTable = new JetSingleTable<MyBean>();
+jetTable.addColumn("someDay", "Some Day", 80, ReadOnlyCondition.NEVER);
+jetTable.addColumn("someText", "Some Text", 170, ReadOnlyCondition.NEVER);
+jetTable.addColumn("someInt", "Some Integer", 60, ReadOnlyCondition.NEVER);
+jetTable.addColumn("someBoolean", "Some boolean", 60, ReadOnlyCondition.NEVER);
+jetTable.setValues(myBeanCollection);
+```
+
+And you end up having something like this!
+
+![http://gwt-jet.googlecode.com/svn/wiki/basicjettable.png](http://gwt-jet.googlecode.com/svn/wiki/basicjettable.png)
+
+When the user modifies any value, the corresponding values in your beans will be modified as well. Remember this occurs client side. If you obtained your _myBeanCollection_ from the server, you could easily resend it back after the user confirms the changes.
+
+# But is this flexible? #
+
+Very flexible. Wrappers for most common java types are automatically used (like the ones in the example), but you can create your owns or even redefine inline any to react as you want. The same for the ReadOnlyCondition. And JetTable is a FlexTable so you can format it as usual. The key here is: make it fast, or make it as complex as you like.
+
+Check more examples in the [Showcase](http://code.google.com/p/gwt-jet/wiki/Showcase) project

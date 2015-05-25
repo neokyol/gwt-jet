@@ -1,0 +1,12 @@
+  * **Does gwt-jet have any dependencies?**
+No. Of course you need GWT 2.2+, but then it's just a single jar file. The great [GWT ENT](http://code.google.com/p/gwt-ent/) libraries are provided inside the jar.
+  * **What versions of GWT are supported?**
+The project has been developed with GWT 2.2 and is also tested with 2.3 and 2.4. We hope next versions will be supported without major changes.
+  * **Is it stable for a production environment?**
+Yes! We developed gwt-jet thru 2011 aiming to solve the presentation layer of a big gwt project. The project is currently online and attending 500+ daily active users. Every issue detected was fixed before the first alpha release.
+  * **What about performance?**
+It will depend on the client computer specs, but a complex table with hundreds of rows behaves nicely on a standard pc. For thousands of rows and more, you just need to use [JetPaginatedTable](http://gwt-jet.googlecode.com/svn/trunk/javadoc/ar/com/kyol/jet/client/JetPaginatedTable.html). Anyway there's still a pending performance boost to be done as soon as we find the time, but probably nobody will notice it.
+  * **Can I override the default css?**
+Of course! Check Jet.css file located in the root of the jar, it's all there.
+  * **Does it support internationalization?**
+Yes. There are some words used in none standard widgets, so just copy and translate JetConstants.properties with your ISO language and country code suffixes and place it into a package named ar.com.kyol.client in your project.
